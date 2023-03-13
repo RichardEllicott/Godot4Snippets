@@ -3,12 +3,8 @@ paste in a tool script, allows triggering functions
 
 """
 
-
 enum Macro {
-    build_trees_01, # default setup
-    sprites_to_quad_meshes,
-    get_random_positions,
-    setup_dynamic_mode,
+    main
    }
 
 @export var trigger_macro = false : set = set_trigger_macro
@@ -19,3 +15,9 @@ func set_trigger_macro(input):
             _ready() # ensure vars are available
         call(Macro.keys()[macro])
 @export var macro: Macro = 0
+
+func _ready():
+    pass
+
+func main():
+    pass
