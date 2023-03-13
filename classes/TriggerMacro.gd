@@ -3,8 +3,9 @@ paste in a tool script, allows triggering functions
 
 """
 
+
 enum Macro {
-    main
+    macro01,
    }
 
 @export var trigger_macro = false : set = set_trigger_macro
@@ -19,5 +20,5 @@ func set_trigger_macro(input):
 func _ready():
     pass
 
-func main():
+func macro01():
     pass
