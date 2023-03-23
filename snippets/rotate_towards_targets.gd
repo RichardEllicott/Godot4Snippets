@@ -5,6 +5,11 @@ still trying to find decent functions to rotate towards an target over a period 
 
 best so far gets an angle from a Quaterion to scale the speed by
 
+
+
+it works a bit, it goes crazy with some settings.... zzz
+
+
 """
 
 
