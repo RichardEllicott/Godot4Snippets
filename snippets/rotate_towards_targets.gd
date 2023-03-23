@@ -8,7 +8,6 @@ best so far gets an angle from a Quaterion to scale the speed by
 """
 
 
-
 static func rotate_towards_linear(from: Basis, to: Basis, delta: float, correction = true) -> Basis:
     
     var _return: Basis = from
