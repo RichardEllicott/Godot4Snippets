@@ -3,11 +3,12 @@
 still trying to find decent functions to rotate towards an target over a period of time at a linear speed (not interpolate spring like speed)
 
 
-best so far gets an angle from a Quaterion to scale the speed by
+i have worked out this can't really be possible with transforms since we have to specify a time based on diatance or rotation?
 
 
 
-it works a bit, it goes crazy with some settings.... zzz
+it seems best to use tweens for now.... but i still wouldn't mind a function for this for security cameras or turrets?
+
 
 
 """
