@@ -33,6 +33,7 @@ func macro_get_stuff():
 
 
 
+  
 ## turn a csv string into a dicts of dicts allowing loading spreadsheet data
 ## does not support escape characters and quotation marks unfortunatly
 static func csv_string_to_dicts(tsv_string: String, split_symbol: String = ",") -> Dictionary:
@@ -46,13 +47,19 @@ static func csv_string_to_dicts(tsv_string: String, split_symbol: String = ",") 
         var row: Array = lines[i].split(split_symbol) # get a row by splitting
         if i == 0: # first row has keys
             keys = row
+            
+            for i2 in keys.size():
+                var s = keys[i2].strip_edges()
+                keys[i2] = s
+             
         else:
             if row.size() == keys.size(): # skip if the size is not valid
                 var row_dict = {}
-                return_dict[row[0]] = row_dict
+                return_dict[row[0].strip_edges()] = row_dict
                 for i2 in row.size():
                     
                     var val = row[i2].strip_edges()
+                    
                     if val.is_valid_int(): # detect int
                         val = int(val)
                     elif val.is_valid_float(): # detect float
