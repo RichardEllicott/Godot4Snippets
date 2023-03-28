@@ -11,6 +11,17 @@ so far i can't get it to work in tool mode
 """
 
 
+## method for only searching childs below:
+
+var animation_tree: AnimationTree # the node reference itself
+func get_animation_tree() -> AnimationTree: # run this function first, will work in tool mode
+    if not is_instance_valid(animation_tree):
+        animation_tree = find_child("AnimationTree")
+    return animation_tree
+
+
+
+
 ## my old method updated:
 
 @export var _terrain_generator: NodePath # has a string to the target node

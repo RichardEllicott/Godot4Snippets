@@ -17,3 +17,9 @@ static func get_or_create_child(parent: Node, node_name: String, node_type = Nod
         if Engine.is_editor_hint():
             child.owner = parent.owner # required to spawn in editor tool mode    
     return child
+
+
+
+
+
+
