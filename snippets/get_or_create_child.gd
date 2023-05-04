@@ -19,6 +19,18 @@ static func get_or_create_child(parent: Node, node_name: String, node_type = Nod
     return child
 
 
+## not sure if the last one works
+
+func get_or_create_child(_parent, _name, type = Node3D):
+    var node = _parent.get_node_or_null(_name)
+    if node == null:
+        node = type.new()
+        node.name = _name
+        _parent.add_child(node)
+        if Engine.is_editor_hint():
+            node.set_owner(get_tree().edited_scene_root)
+    return node
+
 
 
 
