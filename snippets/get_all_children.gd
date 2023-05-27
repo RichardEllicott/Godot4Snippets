@@ -1,6 +1,11 @@
 """
 get ALL children
 
+eg:
+
+for child in get_all_children(self):
+    print(child)
+
 """
 
 
