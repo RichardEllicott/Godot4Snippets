@@ -1,7 +1,22 @@
 """
 paste in a tool script, allows triggering functions in tool mode
 
+second sample shows enumerated macros
+
 """
+
+
+
+# hack a bool into a trigger button that works in tool mode
+@export var trigger_update = false : set = set_trigger_update
+func set_trigger_update(input):
+    if input:
+        trigger_update = false
+        if Engine.is_editor_hint():
+            _ready() # ensure vars are available
+            # run commands here
+
+
 
 
 enum Macro {
@@ -23,12 +38,3 @@ func _ready():
 func macro01():
     pass
     
-
-# hack a bool into a trigger button that works in tool mode
-@export var trigger_update = false : set = set_trigger_update
-func set_trigger_update(input):
-    if input:
-        trigger_update = false
-        if Engine.is_editor_hint():
-            _ready() # ensure vars are available
-            # run commands here
