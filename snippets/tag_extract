@@ -1,3 +1,9 @@
+"""
+extract custom tags from strings, used to add instructions to blender objects, tested Godot 4
+
+"""
+
+
 static func tag_extract(input_string, open_symbol = '[', close_symbol = ']') -> Array:
     """
     takes an input string which might have many tags like
