@@ -11,6 +11,22 @@ tweens are better for animating things in script
 
 """
 
+# tween cache, when we grab a tween it will kill the old one if it exists (one per target)
+var _tween_cache = {}
+
+func _kill_and_get_tween(target) -> Tween:
+    
+    if target in _tween_cache:
+        var tween = _tween_cache[target]
+        tween.kill()
+    
+    var tween: Tween = get_tree().create_tween()
+    _tween_cache[target] = tween
+    return tween
+
+
+
+
 ## quick shortcut create a tween to move transform on a target
 var _tweens = {}
 func _create_tween(target: Node3D, _transform: Transform3D, time = 1.0, transition_type = Tween.TRANS_LINEAR):
