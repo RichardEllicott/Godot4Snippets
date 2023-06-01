@@ -7,27 +7,14 @@ grab a node child by name, but if it doesn't exist create it and also ensure it 
 
 """
 
-## Godot 4 get_or_create_child
-static func get_or_create_child(parent: Node, node_name: String, node_type = Node) -> Node:        
-    var child = parent.get_node_or_null(node_name) # get the node if present
-    if not is_instance_valid(child): # if no node found make one
-        child = node_type.new()
-        child.name = node_name
-        parent.add_child(child)
-        if Engine.is_editor_hint():
-            child.owner = parent.owner # required to spawn in editor tool mode    
-    return child
-
-
-## not sure if the last one works
-
-func get_or_create_child(_parent, _name, type = Node3D):
+## get existing or create new child node, works in tool mode to show in editor
+func get_or_create_child(_parent, _name, type = Node3D) -> Node:
     var node = _parent.get_node_or_null(_name)
-    if node == null:
+    if not node:
         node = type.new()
         node.name = _name
         _parent.add_child(node)
-        if Engine.is_editor_hint():
+        if Engine.is_editor_hint(): # if in editor we need to do this to show in editor
             node.set_owner(get_tree().edited_scene_root)
     return node
 
