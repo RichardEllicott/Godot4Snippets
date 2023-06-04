@@ -6,6 +6,14 @@ second sample shows enumerated macros
 """
 
 
+# better syntax
+@export var trigger_update: bool:
+    set(value):
+        if Engine.is_editor_hint():
+            _ready() # ensure vars are available
+            # run commands here
+
+
 
 # hack a bool into a trigger button that works in tool mode
 @export var trigger_update = false : set = set_trigger_update
