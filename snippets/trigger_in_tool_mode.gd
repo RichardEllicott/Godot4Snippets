@@ -8,10 +8,12 @@ second sample shows enumerated macros
 
 # better syntax
 @export var trigger_update: bool:
-    set(value):
-        if Engine.is_editor_hint():
-            _ready() # ensure vars are available
-            # run commands here
+    set(value): # Godot 4 style get/set
+        if value: # if True
+            if Engine.is_editor_hint(): # if in editor mode
+    #            _ready() # ensure vars are available
+                trigger()
+                # run commands here
 
 
 
