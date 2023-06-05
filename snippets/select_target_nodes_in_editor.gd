@@ -11,6 +11,16 @@ so far i can't get it to work in tool mode
 """
 
 
+# target node as property that works in tool script (i believe the enhanced way does not)
+@export var _target: NodePath = "."
+var target:
+    get:
+        return get_node_or_null(_target)
+
+
+
+
+
 ## method for only searching childs below:
 
 var animation_tree: AnimationTree # the node reference itself
