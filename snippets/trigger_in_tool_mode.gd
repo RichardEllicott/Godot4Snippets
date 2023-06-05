@@ -5,16 +5,11 @@ second sample shows enumerated macros
 
 """
 
-# coder can trigger scripts in tool mode with pretend button (using a boolean variable)
-# better syntax using get/set of Godot 4
-## 
 @export var trigger_update: bool:
-    set(value): # Godot 4 style get/set
-        if value: # if True
-            if Engine.is_editor_hint(): # if in editor mode
-    #            _ready() # ensure vars are available
-                trigger()
-                # run commands here
+    set(value):
+        if value and Engine.is_editor_hint():
+            _ready()
+            # run commands here
 
 
 
