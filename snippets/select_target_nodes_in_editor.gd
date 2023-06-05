@@ -10,12 +10,20 @@ so far i can't get it to work in tool mode
 
 """
 
-
 # target node as property that works in tool script (i believe the enhanced way does not)
 @export var _target: NodePath = "."
 var target:
     get:
         return get_node_or_null(_target)
+        
+# with a cache of the result, use if you called this property each frame for example, can result in bugs if you change the NodePath
+@export var _target: NodePath = "."
+var __target
+var target:
+    get:
+        if not __target:
+            __target = get_node_or_null(_target)
+        return __target
 
 
 
