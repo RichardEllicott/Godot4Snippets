@@ -1,13 +1,11 @@
 """
-get ALL children
 
-eg:
+easy way of getting all children of a node
 
 for child in get_all_children(self):
-    print(child)
+    print(child.name)
 
 """
-
 
 # https://godotengine.org/qa/74010/how-to-get-all-children-from-a-node
 static func get_all_children(_self: Node, array:= []) -> Array:
