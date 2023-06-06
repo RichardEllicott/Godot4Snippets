@@ -34,3 +34,10 @@ static func unix_time_from_year(year = 2000, month = 1, day = 1, hour = 0, minut
         })
         
     return ret
+    
+## normal way to get the game time in seconds
+static func get_time() -> float:
+    return Time.get_ticks_usec() / 1000000.0
+    
+    
+    
