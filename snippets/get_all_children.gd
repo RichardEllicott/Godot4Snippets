@@ -22,9 +22,6 @@ static func get_all_children(_self: Node, children:= []) -> Array:
     
     
 ## get all children with a predicate match (use a lambda or callable that returns a boolean)
-## example:
-## get_all_children(self, func(child): return child is Node3D)
-
 static func get_all_children(_self: Node, predicate: Callable = func (child): return child is Node) -> Array:
     var matches: Array = []
     var waiting: Array = _self.get_children()
