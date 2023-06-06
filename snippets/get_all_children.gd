@@ -26,4 +26,18 @@ func print_all_children(_self: Node):
         
         print(node)
 #       # do something with the node here (or use the lambda)
+
+
+
+
+## find all childs with a predicate match, default here is Node3D
+func match_children(_self: Node, predicate = func (child): return child is Node3D):
+    var matches = []
+    var waiting := _self.get_children()
+    while waiting.size() > 0:
+        var node := waiting.pop_back() as Node
+        waiting.append_array(node.get_children())
+        if predicate.call(node):
+            matches.append(node)
+    return matches
     
