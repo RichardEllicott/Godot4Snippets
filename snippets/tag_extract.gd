@@ -83,6 +83,47 @@ static func tag_extract(input_string: String, open_symbol: String = '<', close_s
 
 
 
+## extract a string like found in an xml tag, seperates by spaces (ignoring quotes)
+## for example:
+## start text="hello there" par3
+## =>
+## ['start', 'text="hello there"', 'par3']
+static func xml_tag_split(s: String):
+    
+    var pars = []
+    
+    var split_char = ' '
+    
+    var text = ""
+    
+    var is_split = false
+    
+    var quotes_open = false
+    
+    var quote_char = '"'
+    
+    var quote_char2 = "'"
+    
+    for char in s:
+            
+        if char == quote_char or char == quote_char2: # if we find a quote char
+            quotes_open = not quotes_open # flip quotes open
+        
+        if char == split_char and quotes_open == false:
+            
+            if not is_split: # start split
+                if text.length() > 0:
+                    pars.append(text)
+                    text = ""
+                is_split = true
+        else:
+            is_split = false
+            text += char
+    if text.length() > 0: # some text may still be here
+        pars.append(text)
+    return pars
+
+
     
 
 
