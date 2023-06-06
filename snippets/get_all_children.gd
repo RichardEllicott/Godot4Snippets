@@ -60,19 +60,13 @@ static func get_all_children(_self: Node) -> Array:
 
 
 
-
-    
-    
-    
 # using recursion to print a tree of the nodes
-static func print_all_children_as_tree(_self: Node, max_depth = 4, array:= [], depth = 0) -> Array:
+static func print_all_children_as_tree(_self: Node, max_depth = 4, depth = 0) -> void:
     if depth <= max_depth:
-#        array.push_back(_self)
         var pad = ""
         for i in depth:
             pad += "    "
-        print("%s %s" % [pad, _self])
+        print("%s%s" % [pad, _self])
         for child in _self.get_children():
-            array = print_all_children_as_tree(child, max_depth, array, depth + 1)
-    return array
+            print_all_children_as_tree(child, max_depth, depth + 1)
     
