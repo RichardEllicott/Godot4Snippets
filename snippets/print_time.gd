@@ -12,6 +12,9 @@ time functions
 ## 
 ## "{year}-{month}-{day} {hour}:{minute}:{second}" # military style, orders folders and doesn't confuse americans
 ## "{day}/{month}/{year} {hour}:{minute}:{second}" # UK style
+##
+## example (print current time)
+## print(unix_time_to_timestamp(Time.get_unix_time_from_system()))
 
 static func unix_time_to_timestamp(seconds: float, format: String = "{year}-{month}-{day} {hour}:{minute}:{second}") -> String:
     return format.format(Time.get_datetime_dict_from_unix_time(seconds))
