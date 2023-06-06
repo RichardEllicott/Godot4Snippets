@@ -15,10 +15,10 @@ using recursion is adequete for most tasks it seems
 ## https://godotengine.org/qa/74010/how-to-get-all-children-from-a-node
 
 static func get_all_children(_self: Node, children:= []) -> Array:
-    array.push_back(_self)
+    children.push_back(_self)
     for child in _self.get_children():
-        array = get_all_children(child, array)
-    return array
+        children = get_all_children(child, children)
+    return children
     
     
 ## get all children with a predicate match (use a lambda or callable that returns a boolean)
