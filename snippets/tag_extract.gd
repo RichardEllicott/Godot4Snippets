@@ -3,9 +3,8 @@ extract custom tags from strings, used to add instructions to blender objects, t
 
 """
 
-## this function is quite large and iterates the entire 
 
-
+## older version, keeping if issues
 static func tag_extract(input_string: String, open_symbol: String = '<', close_symbol: String = '>') -> Array:
     """
     takes an input string which might have many tags like
@@ -47,36 +46,42 @@ static func tag_extract(input_string: String, open_symbol: String = '<', close_s
     
 ## tag extract discreet version:
 ## tags like <tag <subtag>> will return back as "tag <subtag>"
-## code slightly less confusing
-static func tag_extract(input_string: String, open_symbol: String = '<', close_symbol: String = '>') -> Array:
+## but normally throws error as max_nest = 1!
+static func tag_extract(input_string: String, open_symbol: String = '<', close_symbol: String = '>') -> Array[String]:
 
-    var nest = 0
-    var text = "" # store all text not in tags
-    var tags = []
-    var bracketed_text = ""
+    var nesting: int = 0
+    var text: String = "" # store all text not in tags
+    var tags: Array[String] = []
+    var bracketed_text: String = ""
+    var max_nest: int = 1
 
     for _char in input_string:
         
         if _char == open_symbol: ## when we open the brackets
-            nest += 1
-            if nest > 1: # as we are already nested so we store the < char
+            nesting += 1
+            if nesting > max_nest:
+                push_error("tag extract nest exceeded %s (malformed xml)" % [max_nest])
+            if nesting > 1: # as we are already nested so we store the < char
                 bracketed_text += _char
             
         elif _char == close_symbol: ## when we close the brackets
-            nest -= 1
-            if nest > 0: # we still have a tag open so store the > char
+            nesting -= 1
+            if nesting > 0: # we still have a tag open so store the > char
                 bracketed_text += _char
             
-            if nest == 0: # we must have closed the tag, so save this text
+            if nesting == 0: # we must have closed the tag, so save this text
                 tags.append(bracketed_text)
                 bracketed_text = ""
             
-        elif nest == 0: # at nest zero no tags are open
+        elif nesting == 0: # at nest zero no tags are open
             text += _char
-        elif nest > 0: # if tags open
+        elif nesting > 0: # if tags open
             bracketed_text += _char
+            
+    if nesting > 0:
+        push_error("tag extract, tag not closed (malformed xml)")
 
-    return [text] + tags
+    return tags
     
     
 
