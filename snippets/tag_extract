@@ -4,10 +4,10 @@ extract custom tags from strings, used to add instructions to blender objects, t
 """
 
 
-static func tag_extract(input_string, open_symbol = '[', close_symbol = ']') -> Array:
+static func tag_extract(input_string, open_symbol = '<', close_symbol = '>') -> Array:
     """
     takes an input string which might have many tags like
-    "this is[tag] a sentance[end]"
+    "this is<tag> a sentance<end>"
     =>
     ["this is a sentance", "tag", "end"]
     
@@ -38,3 +38,21 @@ static func tag_extract(input_string, open_symbol = '[', close_symbol = ']') -> 
             else:
                 text += _char
     return [text] + instructions
+    
+
+
+
+
+## regex version
+var _tag_extract_regex: RegEx
+func tag_extract2(input_string: String, open_symbol: String = '<', close_symbol: String = '>') -> Array[String]:
+    
+    if not _tag_extract_regex:
+        var s = "%s(?<Rmk>[^<]*)%s" % [open_symbol, close_symbol]
+        _tag_extract_regex = RegEx.new()
+        _tag_extract_regex.compile(s)
+    
+    var results: Array[String] = []
+    for result in _tag_extract_regex.search_all(input_string):
+        results.push_back(result.get_string())
+    return results
