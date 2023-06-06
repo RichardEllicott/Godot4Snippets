@@ -6,22 +6,23 @@ extract custom tags from strings, used to add instructions to blender objects, t
 ## this function is quite large and iterates the entire 
 
 
-static func tag_extract(input_string, open_symbol = '<', close_symbol = '>') -> Array:
+static func tag_extract(input_string: String, open_symbol: String = '<', close_symbol: String = '>') -> Array:
     """
     takes an input string which might have many tags like
-    "this is<tag> a sentance<end>"
+    "this is[tag] a sentance[end]"
     =>
     ["this is a sentance", "tag", "end"]
-    
-    the code is larger than a regex version but capable of more, this method could be modified to detect nesting levels 
-    
+
+    this is used to extra hidden comman tags
+
+    https://github.com/RichardEllicott/GodotSnippets/blob/master/code_patterns/tag_extract.gd
     """
     var nest = 0
     var open_brackets = false
-    var text = ""
-    var instructions = []
+    var text = "" # store all text not in tags
+    var tags = []
     var bracketed_text = ""
-    
+
     for _char in input_string:
         if _char == open_symbol: ## when we open the brackets
             nest += 1
@@ -31,14 +32,57 @@ static func tag_extract(input_string, open_symbol = '<', close_symbol = '>') -> 
             nest -= 1
             if nest == 0:
                 open_brackets = false
-                instructions.append(bracketed_text)
+                tags.append(bracketed_text)
                 bracketed_text = ""
         else:
             if open_brackets:
-                bracketed_text += _char
+                bracketed_text += _char # brackets are open record text
             else:
                 text += _char
-    return [text] + instructions
+    return [text] + tags
+    
+    
+    
+    
+    
+## tag extract discreet version:
+## tags like <tag <subtag>> will return back as "tag <subtag>"
+## code slightly less confusing
+static func tag_extract(input_string: String, open_symbol: String = '<', close_symbol: String = '>') -> Array:
+
+    var nest = 0
+    var text = "" # store all text not in tags
+    var tags = []
+    var bracketed_text = ""
+
+    for _char in input_string:
+        
+        if _char == open_symbol: ## when we open the brackets
+            nest += 1
+            if nest > 1: # as we are already nested so we store the < char
+                bracketed_text += _char
+            
+        elif _char == close_symbol: ## when we close the brackets
+            nest -= 1
+            if nest > 0: # we still have a tag open so store the > char
+                bracketed_text += _char
+            
+            if nest == 0: # we must have closed the tag, so save this text
+                tags.append(bracketed_text)
+                bracketed_text = ""
+            
+        elif nest == 0: # at nest zero no tags are open
+            text += _char
+        elif nest > 0: # if tags open
+            bracketed_text += _char
+
+    return [text] + tags
+    
+    
+
+
+
+
     
 
 
