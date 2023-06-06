@@ -14,7 +14,7 @@ time functions
 ## "{day}/{month}/{year} {hour}:{minute}:{second}" # UK style
 ##
 ## example (print current time)
-## print(unix_time_to_timestamp(Time.get_unix_time_from_system()))
+## print(unix_time_to_timestamp(Time.get_unix_time_from_system()) + " UTC")
 
 static func unix_time_to_timestamp(seconds: float, format: String = "{year}-{month}-{day} {hour}:{minute}:{second}") -> String:
     return format.format(Time.get_datetime_dict_from_unix_time(seconds))
