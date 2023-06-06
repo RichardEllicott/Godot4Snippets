@@ -5,16 +5,17 @@ time functions
 
 """
 
-
+# https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_format_string.html
 
 ## convert a unix time number to a readable string
 ## built to display a time to the user like 03/06/2017 13:01:44
-static func unix_time_to_timestamp(number) -> String:
-    var time : Dictionary = OS.get_datetime_from_unix_time(number);
-    var display_string : String = "%d-%02d-%02d %02d:%02d:%02d" % [time.year, time.month, time.day, time.hour, time.minute, time.second];
-#    var display_string : String = "%d/%02d/%02d %02d:%02d:%02d" % [time.day, time.month, time.year, time.hour, time.minute, time.second];
-    return display_string
-    
+## 
+## "{year}-{month}-{day} {hour}:{minute}:{second}" # military style, orders folders and doesn't confuse americans
+## "{day}/{month}/{year} {hour}:{minute}:{second}" # UK style
+
+static func unix_time_to_timestamp(seconds: float, format: String = "{year}-{month}-{day} {hour}:{minute}:{second}") -> String:
+    return format.format(Time.get_datetime_dict_from_unix_time(seconds))
+
 
 ## get a unix time from setting the year/month/day...
 # built to make it easy to construct a made up future time in unix time, like the 31st century or something
