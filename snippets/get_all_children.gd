@@ -20,8 +20,18 @@ static func get_all_children(_self: Node, children : Array[Node] = []) -> Array[
         children = get_all_children(child, children)
     return children
     
+
+# get all children with a max depth (can help to prevent finding too many nodes)
+static func get_all_children(_self: Node, max_depth: int = 4, children: Array[Node] = [], depth: int = 0) -> Array[Node]:
+    if depth <= max_depth:
+        children.push_back(_self)
+        for child in _self.get_children():
+            children = get_all_children(child, max_depth, children, depth + 1)
+    return children
     
-## get all children with a predicate match (use a lambda or callable that returns a boolean)
+    
+    
+## get all children with a predicate match (use a lambda or callable that returns a boolean).. note no recursion, makes depth harder to track
 
 static func get_all_children(_self: Node, predicate: Callable = func (child): return child is Node) -> Array[Node]:
     var matches: Array[Node] = []
@@ -55,17 +65,14 @@ static func get_all_children(_self: Node) -> Array:
     
     
 # using recursion to print a tree of the nodes
-static func print_all_children_as_tree(_self: Node, array:= [], depth = 0, max_depth = 10) -> Array:
-    
+static func print_all_children_as_tree(_self: Node, max_depth = 4, array:= [], depth = 0) -> Array:
     if depth <= max_depth:
-        
-        array.push_back(_self)
+#        array.push_back(_self)
         var pad = ""
         for i in depth:
             pad += "    "
         print("%s %s" % [pad, _self])
-        
         for child in _self.get_children():
-            array = print_all_children_as_tree(child, array, depth + 1, max_depth)
+            array = print_all_children_as_tree(child, max_depth, array, depth + 1)
     return array
     
