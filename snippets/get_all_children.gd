@@ -15,11 +15,10 @@ static func get_all_children(_self: Node, children:= []) -> Array:
     return array
     
     
-
 ## get all children, no recursion
 ## https://godotengine.org/qa/74010/how-to-get-all-children-from-a-node
-func get_all_children(_self: Node):
-    var children = []
+static func get_all_children(_self: Node) -> Array:
+    var children: Array = []
     var waiting := _self.get_children()
     while waiting.size() > 0:
         var node := waiting.pop_back() as Node
