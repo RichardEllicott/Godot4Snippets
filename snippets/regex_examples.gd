@@ -9,6 +9,9 @@
 "(?i)(?<!\w)_ready(?!\w)|^macro" # matches exactly "_ready" or (the | character) starts with "macro" (used for my tool macros)
 
 
+"<tag>(?<Rmk>[^<]*)</tag>" # between xml tags like <tag>hello world</tag>
+
+
 
 ## using regex to pattern match, similar to a glob:
 
@@ -18,4 +21,6 @@ regex.compile("(?i)(?<!\w)_ready(?!\w)|^macro")
 if regex.search != null:
     # if the search is not null, we must have a match
     pass
+
+
 
