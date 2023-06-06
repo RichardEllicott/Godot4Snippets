@@ -14,7 +14,7 @@ using recursion is adequete for most tasks it seems
 ## easy method using recursion, in most cases this would be fine
 ## https://godotengine.org/qa/74010/how-to-get-all-children-from-a-node
 
-static func get_all_children(_self: Node, children:= []) -> Array:
+static func get_all_children(_self: Node, children : Array[Node] = []) -> Array[Node]:
     children.push_back(_self)
     for child in _self.get_children():
         children = get_all_children(child, children)
