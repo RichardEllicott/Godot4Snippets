@@ -2,6 +2,8 @@
 
 fast boilerplate for SurfaceTool, which is probabally ones of the easiest way to draw meshes (it does the normals automaticly)
 
+making the boilerplate functions like this allows fast typing for drawing the geometry with simple commands like "make_quad"
+
 """
 
 ## easy make quad function, by default makes a 2x2 quad plane on the floor
