@@ -1,0 +1,22 @@
+"""
+
+generating repeatable procedural random examples
+
+
+"""
+
+
+var _rng
+func procedural_random_floats(input, ret_vals: int = 3) -> Array:
+    
+    if not _rng:
+        _rng = RandomNumberGenerator.new()
+        
+    _rng.seed = hash(input)
+    
+    var results = []
+    results.resize(ret_vals)
+    for i in ret_vals:
+        results[i] = _rng.randf()
+
+    return results
