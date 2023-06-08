@@ -4,7 +4,8 @@ fast boilerplate for SurfaceTool, which is probabally ones of the easiest way to
 
 """
 
-
+## easy make quad function, by default makes a 2x2 quad plane on the floor
+## set the first var as a 6 or 8 item array to represent the entire quad/triangle as an array of Vector3 and Vector2's
 func make_quad(
     nw = Vector3(-1, 0, -1),
     ne = Vector3(1, 0, -1),
@@ -69,7 +70,7 @@ func add_vertex(pos, uv_pos):
     surface_tool.set_uv(uv_pos)
     surface_tool.add_vertex(pos)
     
-## get_surface_tool().commit()
+## get_surface_tool().commit() will provide a mesh back... set a MeshInstance3D's mesh to this mesh to show your geometry
 var surface_tool
 func get_surface_tool() -> SurfaceTool:
     if not surface_tool:
