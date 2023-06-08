@@ -1,31 +1,6 @@
 
 
 
-func make_quad_with_offset(offset: Vector3):
-    
-
-    var coors = [
-        Vector3(0, 0, 0),
-        Vector3(1, 0, 0),
-        Vector3(1, 0, 1),
-        Vector3(0, 0, 1),
-    ]
-    
-    for i in coors.size():
-        
-        coors[i] = coors[i] + offset
-        
-
-
-    make_quad(
-        coors[0],
-        coors[1],
-        coors[2],
-        coors[3]
-    )
-    
-    
-
 func make_quad(
     nw = Vector3(-1, 0, -1),
     ne = Vector3(1, 0, -1),
