@@ -28,10 +28,7 @@ const bullet_data_from_spreadsheet = """
 """
 
 
-    
-## turn a csv string into a dicts of dicts allowing loading spreadsheet data
-## does not support escape characters and quotation marks unfortunatly
-static func _csv_string_to_dicts(tsv_string: String, split_symbol: String = ",") -> Dictionary:
+static func csv_table_to_dict_of_dicts(tsv_string: String, split_symbol: String = ",") -> Dictionary:
     
     var return_dict: Dictionary = {}
     var lines: Array = tsv_string.strip_edges().split("\n")
