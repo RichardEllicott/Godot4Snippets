@@ -19,6 +19,5 @@
 @export var _node: NodePath
 var node: Node:
     get:
-        if not node:
-            node = get_node_or_null(_node)
+        if not node: node = get_node_or_null(_node)
         return node
