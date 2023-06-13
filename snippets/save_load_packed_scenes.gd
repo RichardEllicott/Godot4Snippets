@@ -4,7 +4,7 @@ saving nodes at runtime to packed scenes can be a powerful way of saving the gam
 
 """
 
-
+var save_state_path = "res://save_state.tscn"
 
 ## pack a node to a PackedScene
 func node_to_packed_scene(nodepath: NodePath) -> PackedScene:
