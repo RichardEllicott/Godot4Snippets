@@ -1,4 +1,8 @@
+"""
 
+shortcut allows adding buttons very rapidly without making tonnes of _on_signal functions
+
+"""
 
 
 ## get all the children recursivly
@@ -20,4 +24,4 @@ func _on_button_pressed(button: Button):
 func _ready():    
     for child in get_all_children(self):
         if child is Button:
-            child.pressed.connect(_on_button_pressed.bind(child))
+            child.pressed.connect(_on_button_pressed.bind(child)) # new Godot 4 syntax
