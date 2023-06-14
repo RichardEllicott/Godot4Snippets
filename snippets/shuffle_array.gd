@@ -1,6 +1,8 @@
 """
-"""
 
+shuffle an array like shuffling cards, provide an optional seed to make the shuffle procedural
+
+"""
 
 func shuffle_array(list, _seed = null):
     list = list.duplicate()
