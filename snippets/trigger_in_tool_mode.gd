@@ -3,6 +3,10 @@ paste in a tool script, allows triggering functions in tool mode
 
 second sample shows enumerated macros
 
+
+
+node.set_owner(get_tree().edited_scene_root)
+
 """
 
 # makes a bool work like a button in the editor (requires a tool script)
