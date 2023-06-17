@@ -27,3 +27,20 @@ func simple_decrypt(key, encrypted_data, iv = "My secret iv!!!!"):
     var decrypted = aes.update(encrypted_data)
     aes.finish()
     return decrypted
+
+## example with base64
+var encrypted = simple_encrypt(key, data)
+encrypted = Marshalls.raw_to_base64(encrypted)
+print(encrypted)
+
+... TODO, to make a truly secure encrypt, need to add the IV to the front of the result.. when decrypt, take this IV back
+
+
+
+
+
+
+
+    
+    
+    
