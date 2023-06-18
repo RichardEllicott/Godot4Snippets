@@ -1,6 +1,6 @@
 """
 
-for generating random keys etc
+for generating random keys etc for example as a token
 
 
 """
