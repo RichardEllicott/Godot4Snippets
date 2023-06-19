@@ -5,8 +5,10 @@ for generating random keys etc for example as a token
 
 """
 
+
+
 # random bytes with optional seed
-static func _get_random_bytes(count: int, seed = null) -> PackedByteArray:
+static func get_random_bytes(count: int, seed = null) -> PackedByteArray:
     var rng: RandomNumberGenerator = RandomNumberGenerator.new()
     
     if seed:
@@ -23,7 +25,7 @@ static func _get_random_bytes(count: int, seed = null) -> PackedByteArray:
 
 ## example
 func macro_random_bytes():
-    var byte_string = _get_random_bytes(16,4)
+    var byte_string = get_random_bytes(16,4)
     print(byte_string.hex_encode()) # show as a hex string
     
     
