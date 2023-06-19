@@ -7,26 +7,26 @@ for generating random keys etc for example as a token
 
 
 
-# random bytes with optional seed
+
+## random bytes with optional seed
+## examples:
+## print(get_random_bytes(8).hex_encode()) # print 8 random bytes as hex
+## print(Marshalls.raw_to_base64(get_random_bytes(8))) # print 8 random bytes in base64
+##
 static func get_random_bytes(count: int, seed = null) -> PackedByteArray:
     var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-    
     if seed:
         rng.seed = seed
     else:
         rng.randomize()
-        
     var bytes = PackedByteArray()
     bytes.resize(count) 
     for i in count:
         bytes[i] = rng.randi() % 255
-        
     return bytes
 
-## example
-func macro_random_bytes():
-    var byte_string = get_random_bytes(16,4)
-    print(byte_string.hex_encode()) # show as a hex string
+
+
     
     
 # random string gets bytes also
