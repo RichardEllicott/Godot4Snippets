@@ -5,9 +5,6 @@ for generating random keys etc for example as a token
 
 """
 
-
-
-
 ## random bytes with optional seed
 ## examples:
 ## print(get_random_bytes(8).hex_encode()) # print 8 random bytes as hex
@@ -25,9 +22,6 @@ static func get_random_bytes(count: int, seed = null) -> PackedByteArray:
         bytes[i] = rng.randi() % 255
     return bytes
 
-
-
-    
     
 # random string gets bytes also
 static func _get_random_string(count = 8, seed = null, chars: String = "0123456789abcdef") -> String:
