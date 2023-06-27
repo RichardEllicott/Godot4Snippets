@@ -84,7 +84,7 @@ static func sha256(input: String) -> PackedByteArray:
 func macro_test():
     print("macro_test...")
     
-    var key = "My secret key!!!" # Key must be either 16 or 32 bytes.
+    var key = "My secret key!!!"
     var data = "Two households, both alike in dignity,
 In fair Verona, where we lay our scene,
 From ancient grudge break to new mutiny,
