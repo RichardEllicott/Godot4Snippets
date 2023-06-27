@@ -1,10 +1,9 @@
 """
-time functions
+print unix time like "03/06/2017 13:01:44", get a unix time fro year
 
-
+and other time examples
 
 """
-
 # https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_format_string.html
 
 ## convert a unix time number to a readable string
@@ -35,10 +34,10 @@ static func unix_time_from_year(year = 2000, month = 1, day = 1, hour = 0, minut
         
     return ret
     
-
-static func get_time() -> float:
-    return Time.get_ticks_usec() / 1000000.0 ## normal way to get the session time in seconds, using the more accurate cpu clock
+## the most normal way of getting the in game time, not clock time
+static func get_run_time() -> float:
+    return Time.get_ticks_usec() / 1000000.0
     
-
+## get the unix time as a float
 Time.get_unix_time_from_system() # get the unix time from the clock
     
