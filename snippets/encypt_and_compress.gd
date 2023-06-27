@@ -81,6 +81,7 @@ static func sha256(input: String) -> PackedByteArray:
     return hash.finish()
     
 
+## demo of encrypting a secret message with a plaintext password
 func macro_test():
     print("macro_test...")
     
