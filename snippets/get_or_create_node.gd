@@ -32,6 +32,14 @@ func get_or_create_child(_parent, _name, type = Node3D) -> Node:
 
 
 
+static func clear_children(_self: Node):
+    for child in _self.get_children():
+        _self.remove_child(child)
+#        child.queue_free() # this would ensure it is definatly deleted even if referenced elsewhere
+
+
+
+## note changed to static check this
 
 ## super duck typed get_or_create_child
 ## _parent: target parent to add childs to
