@@ -15,7 +15,6 @@ node.set_owner(get_tree().edited_scene_root)
     set(value):
         if value and Engine.is_editor_hint():
             _ready()
-            # run commands here
 
 
 # trigger some macros that run methods on the body with reflection
