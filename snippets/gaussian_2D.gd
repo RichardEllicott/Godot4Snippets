@@ -1,7 +1,9 @@
 """
+probabally not required anymore but does show at least a method for 2 floats to 2D Guassian
 
-probabally not required but perhaps useful for procedural (being more predictable than the built in one)
+built in we could just use:
 
+randfn(0.0,1.0)
 
 """
 
