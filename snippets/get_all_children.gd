@@ -1,12 +1,12 @@
 """
 
-easy way of getting all children of a node
+methods for getting all children of children etc
 
 for child in get_all_children(self):
     print(child.name)
     
     
-using recursion is adequete for most tasks it seems
+using recursion is adequete for most tasks
 
 """
 
