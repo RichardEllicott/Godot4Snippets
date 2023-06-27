@@ -2,6 +2,12 @@
 
 simple dressup of encryption, generates a random IV automaticly and pads to the front of the encrypted data
 
+a sensible method except beware even reasonable password sizes (for servers) might not be for open decrypted data
+
+using a password instead of 32 random bytes for AES can be insecure, which can be avoided with an excessive password size!
+
+expectations should be similar to a password protected zip, which is potentially  vulnerable to brute force attacks
+
 """
 
 
