@@ -39,6 +39,10 @@ static func clear_children(_self: Node):
 
 
 
+
+
+
+
 ## note changed to static check this
 
 ## super duck typed get_or_create_child
@@ -65,12 +69,10 @@ static func get_or_create_child(_parent: Node, _name = null, _type = Node) -> No
             child = _type.new() # we assume just a plain type like Label, LineEdit or Button
         _parent.add_child(child)
     #    if Engine.is_editor_hint(): # i don't think this check is needed
-        child.set_owner(_parent.get_tree().edited_scene_root)
+        child.set_owner(_parent.get_tree().edited_scene_root) # NEW
         if _name != null:
             child.name = _name
     return child
-
-
 
 
 
