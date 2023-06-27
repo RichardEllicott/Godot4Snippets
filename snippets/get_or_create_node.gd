@@ -20,30 +20,24 @@ var node4 = get_or_create_child(node3, "node2", Node3D)
 
 """
 ## get existing or create new child node, works in tool mode to show in editor
-func get_or_create_child(_parent, _name, type = Node3D) -> Node:
+static func get_or_create_child(_parent, _name, type = Node3D) -> Node:
     var node = _parent.get_node_or_null(_name)
     if not node:
         node = type.new()
         node.name = _name
         _parent.add_child(node)
         if Engine.is_editor_hint(): # if in editor we need to do this to show in editor
-            node.set_owner(get_tree().edited_scene_root)
+            node.set_owner(_parent.get_tree().edited_scene_root)
     return node
 
 
-
+## useful when using this pattern to clear old children
 static func clear_children(_self: Node):
     for child in _self.get_children():
         _self.remove_child(child)
 #        child.queue_free() # this would ensure it is definatly deleted even if referenced elsewhere
 
 
-
-
-
-
-
-## note changed to static check this
 
 ## super duck typed get_or_create_child
 ## _parent: target parent to add childs to
