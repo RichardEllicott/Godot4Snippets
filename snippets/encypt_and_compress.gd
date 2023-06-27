@@ -1,18 +1,16 @@
 """
 
-simple dressup of encryption, generates a random IV automaticly and pads to the front of the encrypted data
+simple dressup of AES usng a CBC cipher with a random IV padded to the front of the encrypted data
 
 a sensible method except beware even reasonable password sizes (for servers) might not be for open decrypted data
 
-using a password instead of 32 random bytes for AES can be insecure, which can be avoided with an excessive password size!
+using a password instead of 32 random bytes for AES can be insecure, which can be avoided with an excessive password size! So either generate a random byte key or use the sha256 show in the example with caution
 
 expectations should be similar to a password protected zip, which is potentially  vulnerable to brute force attacks
 
 """
 
-
-
-
+## required method to generate random bytes for IV
 static func get_random_bytes(count: int) -> PackedByteArray:
     randomize()
     var bytes = PackedByteArray()
@@ -20,8 +18,6 @@ static func get_random_bytes(count: int) -> PackedByteArray:
     for i in count:
         bytes[i] = randi() % 255
     return bytes
-
-
 
 
 ## simple encrypt a string with a key, generates and pads the IV internally in the correct way!
@@ -77,11 +73,8 @@ static func decompress(bytes: PackedByteArray) -> PackedByteArray:
     return bytes
 
 
-## this hash function ensures the password is a safe 32 bytes
-## beware, short passwords are vulnerable, this is secure like zip compression
-## which is not very secure if the password is short
-# providing 32 characters even would not be quite as random as 32 random bytes for example
-static func sha512(input: String):
+## sha256 a string
+static func sha256(input: String) -> PackedByteArray:
     var hash = HashingContext.new()
     hash.start(HashingContext.HASH_SHA256)
     hash.update(input.to_ascii_buffer())
