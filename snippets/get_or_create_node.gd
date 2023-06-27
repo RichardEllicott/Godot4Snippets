@@ -27,7 +27,7 @@ static func get_or_create_child(_parent, _name, type = Node3D) -> Node:
         node.name = _name
         _parent.add_child(node)
         if Engine.is_editor_hint(): # if in editor we need to do this to show in editor
-            node.set_owner(_parent.get_tree().edited_scene_root)
+            node.set_owner(_parent.get_tree().edited_scene_root) # new, allows static
     return node
 
 
