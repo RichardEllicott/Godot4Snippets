@@ -6,6 +6,9 @@ saving nodes at runtime to packed scenes can be a powerful way of saving the gam
 
 var save_state_path = "res://save_state.tscn"
 
+
+var sync_nodepath: NodePath # point to the node we want to load and replace
+
 ## pack a node to a PackedScene
 func node_to_packed_scene(nodepath: NodePath) -> PackedScene:
     
@@ -25,6 +28,7 @@ func save_state():
     ResourceSaver.save(node_to_packed_scene(sync_nodepath), save_state_path)
 
 ## remove the node and replace it with our packed scene depacked
+
 func packed_scene_to_node(nodepath: NodePath, packed_scene: PackedScene) -> void:
     var node = get_node(nodepath)
     var orginal_name = node.name
