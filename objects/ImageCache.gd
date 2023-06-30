@@ -5,7 +5,7 @@ ImageCache can be used to sample pixel colors (with bilenear sampling), only rea
 var cache = ImageCache.new()
 var get_color = get_color(texture2d, 0.25, 0.125) # texture2d is the texture we want to read
 
-*texture must be uncompressed to read pixel values*
+*texture must be uncompressed to read pixel values, it also cannot be a generated texture like NoiseTexture2D*
 
 get_color will keep the same file open while you read the same texture.. if the texture changes it will reload
 
