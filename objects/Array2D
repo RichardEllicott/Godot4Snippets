@@ -4,18 +4,18 @@ wrapper to show using a 1D array as a 2D one
 
 """
 
-
+## 2D array accepts all variants
 class Array2D:
     
     var size: Vector2i
     var data: Array = []
     
-    func get_at(pos):        
-        return data[pos.x + pos.y * size.x]
+    func get_at(position: Vector2i):        
+        return data[position.x + position.y * size.x]
         
-    func set_at(pos, val):
-        data[pos.x + pos.y * size.x] = val
+    func set_at(position: Vector2i, val) -> void:
+        data[position.x + position.y * size.x] = val
         
-    func _init(_size: Vector2i):
+    func _init(_size: Vector2i) -> void:
         size = _size
         data.resize(size.x * size.y)
