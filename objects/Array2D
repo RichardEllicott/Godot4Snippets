@@ -1,0 +1,21 @@
+"""
+
+wrapper to show using a 1D array as a 2D one
+
+"""
+
+
+class Array2D:
+    
+    var size: Vector2i
+    var data: Array = []
+    
+    func get_at(pos):        
+        return data[pos.x + pos.y * size.x]
+        
+    func set_at(pos, val):
+        data[pos.x + pos.y * size.x] = val
+        
+    func _init(_size: Vector2i):
+        size = _size
+        data.resize(size.x * size.y)
