@@ -1,6 +1,11 @@
 """
 
-saving nodes at runtime to packed scenes can be a powerful way of saving the gamestate and sending it down the network also
+saving nodes at runtime to packed scenes, converting them to text
+
+WARNING: pattern is unsafe down network:
+https://gitlab.com/-/snippets/2564471?fbclid=IwAR0jlYrJZtr3PM8TwLSGP1GgwJJr5LJbugiDeJiv1jwHpOx9GVCv-DFzoTM
+
+
 
 """
 
