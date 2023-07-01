@@ -26,7 +26,7 @@ static func save_json_file(path : String, content : Dictionary, pretty: bool = t
 static func load_json_file(path : String) -> Dictionary:
     return JSON.parse_string(load_text_file(path))
     
-## godot's built in serialize (more flexible)
+## godot's built in serialize (more flexible and easy)
 static func save_var_file(path: String, content) -> void:
     var file = FileAccess.open(path, FileAccess.WRITE)
     file.store_var(content)
