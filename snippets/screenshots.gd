@@ -2,6 +2,8 @@
 
 grabbing the viewport as an image
 
+i am unsure about image.convert(Image.FORMAT_RGBA8), seems to add size might be needed for alpha
+
 """
 
 
