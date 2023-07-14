@@ -31,5 +31,26 @@ static func rotate_towards_linear(from: Basis, to: Basis, delta: float, correcti
         if correction:
             delta /= angle_to # correct makes constant speed, by dividing with angle distance
         _return *= lerp(Basis.IDENTITY, rotation_basis, delta) # the lerp is a conviniant way of scaling a Basis's magnitude
+
+
+
+
+## was using this but using simply "rotation" and "rotation_degrees" may be better?
+
+## convert a vector to a compass direction and pitch (or tilt, angle from hozizon)
+## returns as x for rotations, y for tilt
+## when using with a camera feed the cameras -transform.basis.z in
+## with -z we will get rotation anticlockwise
+## MIGHT BE OBSOLETE IF WE USE THE "rotation_degrees" property
+static func vector_to_rotations(direction: Vector3) -> Vector2:
+    var rotations = Vector2(atan2(direction.x, direction.z), 0.0) # add first compass angle in radians
+    direction = direction.rotated(Vector3(0,1,0), -rotations.x) # rotate to eliminate the angle
+    rotations.y = atan2(direction.y, direction.z) #the tilt
+    return rotations
+    
+static func transform_to_rotations(_transform: Transform3D) -> Vector2:
+    return vector_to_rotations(-_transform.basis.z)
+
+
     
     return _return 
