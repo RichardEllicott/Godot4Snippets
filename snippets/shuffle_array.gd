@@ -4,6 +4,9 @@ shuffle an array like shuffling cards, provide an optional seed to make the shuf
 
 leaves orginal array alone, returns a shuffled one
 
+
+call seed before running for procedural
+
 """
 
 
