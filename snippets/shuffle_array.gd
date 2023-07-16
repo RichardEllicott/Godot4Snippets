@@ -4,7 +4,7 @@ shuffle an array like shuffling cards, provide an optional seed to make the shuf
 
 """
 
-func shuffle_array(list, _seed = null):
+static func shuffle_array(list, _seed = null) -> Array:
     list = list.duplicate()
     if _seed:
         seed(_seed)
