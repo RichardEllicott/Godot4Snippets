@@ -1,8 +1,11 @@
 """
+
+image drawing functions
+
+
 """
 
-
-## draw a rectangle on an image
+## draw a solid rectangle on an image
 static func image_draw_rect(image: Image, rect: Rect2i, color: Color):
     for _y in rect.size.y:
         for _x in rect.size.x:        
