@@ -16,6 +16,7 @@ static func image_draw_rect(image: Image, rect: Rect2i, color: Color):
 
 
 # static function to return interpolated color value for coordinates from (0,0) to (1,1)
+# used for me to get the exact same heightmaps values as a shader
 static func get_image_interpolated(heightmap_image: Image, x: float, y :float) -> Color:
     """
     reads the colours of an image using a simple "bilinear filter", this means the returned result is built of four sampled pixel values
