@@ -14,13 +14,6 @@ static func image_draw_rect(image: Image, rect: Rect2i, color: Color):
             image.set_pixel(x, y, color)
 
 
-
-
-
-
-
-
-
 # static function to return interpolated color value for coordinates from (0,0) to (1,1)
 # used for me to get the exact same heightmaps values as a shader
 static func get_image_interpolated(
@@ -32,7 +25,8 @@ static func get_image_interpolated(
     transpose: bool = false # swap the x and y axis, use in combination with flip_x and flip_y to rotate
     ) -> Color:
     
-    ## function reads color values from an image, using a bilinear sample (4 pixels for the final colour)
+    ## function reads color values from an image using an average sample of 4 pixels
+    ## this will scale, but badly, it is best used with pre-scaled images
     ##
     ## has translation options (flip_x, flip_y, transpose):
     ## false, false, false # default no rotation (N)
@@ -91,4 +85,3 @@ static func get_image_interpolated(
     var color3 = lerp(color1, color2, y_fraction) # then the two rows results
                 
     return color3
-
