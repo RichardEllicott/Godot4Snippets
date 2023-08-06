@@ -19,6 +19,8 @@ static func image_draw_rect(image: Image, rect: Rect2i, color: Color):
 
 
 
+
+
 # static function to return interpolated color value for coordinates from (0,0) to (1,1)
 # used for me to get the exact same heightmaps values as a shader
 static func get_image_interpolated(
@@ -37,8 +39,12 @@ static func get_image_interpolated(
     ## true, false, true # rotate clockwise 1 (E)
     ## true, true, false # rotate clockwise 2 (S)
     ## false, true, true # rotate clockwise 3 (W)
-
-    var image_size = image.get_size() # image dimensions required to find pixel locations
+    
+    # the image should not be compressed but if it is, try to decompress it
+    if image.is_compressed():
+        image.decompress()
+    
+    var image_size = image.get_size()
     
     # ensure input is from 0 to 1, i added the addition as fmod provided odd return values for negative last time i tested
     x = fmod(x+1000000.0,1.0)
@@ -85,4 +91,4 @@ static func get_image_interpolated(
     var color3 = lerp(color1, color2, y_fraction) # then the two rows results
                 
     return color3
-        
+
