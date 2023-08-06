@@ -85,3 +85,31 @@ static func get_image_interpolated(
     var color3 = lerp(color1, color2, y_fraction) # then the two rows results
                 
     return color3
+
+
+
+
+
+## use the previous image reading function to stamp an image over another one
+## can be used to draw tiles into an image for instance
+static func image_draw_image_rect(
+    draw_to_image: Image,
+    rect: Rect2i,
+    stamp_image: Image,
+    color: Color = Color.WHITE,
+    flip_x = false,
+    flip_y = false,
+    transpose = false
+    ):
+    
+    for _y in rect.size.y:
+        for _x in rect.size.x:
+            var x = _x + rect.position.x
+            var y = _y + rect.position.y
+            
+            var x_lerp = float(_x) / float(rect.size.x)
+            var y_lerp = float(_y) / float(rect.size.y)
+            
+            var color2 = get_image_interpolated(stamp_image, x_lerp, y_lerp, flip_x, flip_y, transpose) * color
+                        
+            draw_to_image.set_pixel(x, y, color2)
