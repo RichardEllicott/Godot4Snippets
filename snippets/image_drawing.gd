@@ -17,10 +17,12 @@ static func image_draw_rect(image: Image, rect: Rect2i, color: Color):
 
 
 
+
+
 # static function to return interpolated color value for coordinates from (0,0) to (1,1)
 # used for me to get the exact same heightmaps values as a shader
 static func get_image_interpolated(
-    image: Image,
+    image: Image, # input an image to read, you may get this from a texture
     x: float, # x pos from 0->1
     y :float, # y pos from 0->1
     flip_x: bool = false, # flip the image on the x axis
@@ -83,3 +85,4 @@ static func get_image_interpolated(
     var color3 = lerp(color1, color2, y_fraction) # then the two rows results
                 
     return color3
+        
