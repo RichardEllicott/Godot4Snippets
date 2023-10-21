@@ -5,6 +5,7 @@ method of lerping an array, i made it for this rough polar data for a boat from 
 https://www.researchgate.net/publication/235639420_Omni-Directional_Camera_and_Fuzzy_Logic_Path_Planner_for_Autonomous_Sailboat_Navigation
 
 
+this could be used to translate a position from 0 to 1 (min to max) to a curve for example
 
 
 """
