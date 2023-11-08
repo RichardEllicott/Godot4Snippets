@@ -5,7 +5,7 @@ this pattern allows finding a single node in the scene (using groups), like sing
 """
 
 func _ready():
-    add_to_group("SHMUP_GridMap", true)
+    add_to_group("SHMUP_GridMap", true) # put this on the findable node (or set group in editor)
 
 
 var shmup_gridmap: SHMUP_GridMap:
