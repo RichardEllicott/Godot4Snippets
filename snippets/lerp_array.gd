@@ -7,7 +7,9 @@ https://www.researchgate.net/publication/235639420_Omni-Directional_Camera_and_F
 
 this could be used to translate a position from 0 to 1 (min to max) to a curve for example
 
-note the positions need to be of equal distance for practical usage
+
+the input array must be assumed of equal increments, for example if years, 10, 20, 30, 40, 50
+cleaning data like this can be achieved using numpy in python
 
 
 """
