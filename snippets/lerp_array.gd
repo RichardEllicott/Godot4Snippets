@@ -16,7 +16,7 @@ var data = [0.0, 5.0, 6.0, 5.5, 5.0, 5.0]
 
 ## input an array of data like floats or colors
 ## get the value at a position from 0 to 1, where 0 is the start and 1 the end of the array
-func get_lerped_array(data: Array, pos: float):
+static func get_lerped_array(data: Array, pos: float):
     
     var div = data.size() - 1 # the total divisions is the amount of spaces in between the data values
     
