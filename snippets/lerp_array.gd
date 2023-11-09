@@ -7,6 +7,8 @@ https://www.researchgate.net/publication/235639420_Omni-Directional_Camera_and_F
 
 this could be used to translate a position from 0 to 1 (min to max) to a curve for example
 
+note the positions need to be of equal distance for practical usage
+
 
 """
 
@@ -45,7 +47,7 @@ func macro_test():
         
         var angle = i / float(divs)
 
-        var polar = get_lerped_array(data, angle)
+        var polar = lerp_array(data, angle)
         
         
         print("angle: %.2f polar: %.2f" % [angle, polar])
