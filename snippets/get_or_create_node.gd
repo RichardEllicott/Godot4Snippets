@@ -21,6 +21,7 @@ var node4 = get_or_create_child(node3, "node2", Node3D)
 """
 
 ## get existing or create new child node, works in tool mode to show in editor
+## i use this a lot to automaticly set up a node tree, this makes it easier to come back to scripts it's easier than notes
 static func get_or_create_child(_parent, _name, type = Node3D) -> Node:
     var child = _parent.get_node_or_null(_name)
     if not child:
