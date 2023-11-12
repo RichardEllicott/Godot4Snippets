@@ -35,3 +35,16 @@ static func load_var_file(path: String, content):
     if FileAccess.file_exists(path):
         var file = FileAccess.open(path, FileAccess.READ)
         return file.get_var()
+
+
+
+static func save_to_json_file(path : String, content : Dictionary, pretty: bool = true):
+    var json_string = JSON.stringify(content, "    ")
+    var file = FileAccess.open(path,FileAccess.WRITE)
+    file.store_string(json_string)
+        
+static func load_from_json_file(path : String) -> Dictionary:
+    var file = FileAccess.open(path,FileAccess.READ)
+    var content = file.get_as_text()    
+    content = JSON.parse_string(content)
+    return content
