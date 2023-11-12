@@ -1,8 +1,7 @@
 """
 """
-
-
-
+## serialize the gridmap in the form:
+## [x, y, z, item, orientation ...
 func serialize() -> Array:
     var data = []
     for cell in get_used_cells():
