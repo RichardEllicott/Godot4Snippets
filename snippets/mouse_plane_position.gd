@@ -1,6 +1,10 @@
 """
 get the world position of the mouse projected to a plane, good for like an RTS where the floor is always the same height
 
+https://docs.godotengine.org/en/stable/tutorials/inputs/mouse_and_input_coordinates.html
+
+get_viewport().get_mouse_position()
+
 """
 
 
