@@ -3,6 +3,8 @@ save a gridmap as an array of ints in the form
 
 [x1, y1, z1, item_1, orientation_1, x2, y2, z2, item_2, orientation_2 ...
 
+example json save function at bottom
+
 """
 
 
