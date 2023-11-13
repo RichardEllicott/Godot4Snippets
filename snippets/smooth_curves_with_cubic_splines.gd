@@ -2,6 +2,10 @@
 
 functions to smooth out Path3Ds, allowing easy drawing of roads and railways etc
 
+when drawing a Path3D in the editor, it will turn out with straight angles until you set the point in and out
+
+this code does that automaticly, it makes roughly a "cubic spline" which is a sort of curve through points
+
 """
 
 
