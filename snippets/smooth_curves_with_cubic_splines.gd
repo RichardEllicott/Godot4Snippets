@@ -6,6 +6,9 @@ when drawing a Path3D in the editor, it will turn out with straight angles until
 
 this code does that automaticly, it makes roughly a "cubic spline" which is a sort of curve through points
 
+
+LIMITATIONS: A Godot Curve3D also has an "up" or rotation, i'm not sure how to deal with that
+
 """
 
 
