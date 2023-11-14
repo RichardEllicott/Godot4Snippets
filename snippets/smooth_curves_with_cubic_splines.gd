@@ -55,3 +55,45 @@ static func smooth_curve(curve: Curve3D, curve_strength: float) -> Curve3D:
     for i in curve.point_count:
         positions.append(curve.get_point_position(i))
     return spline_positions_to_curve(positions, curve_strength)
+
+
+
+
+
+## new version works direct to curve, trys to work for a closed loop
+## now doesn't work right with non loop (needs solution)
+static func cubic_smooth_curve(curve3d: Curve3D, strength: float = 1.0) -> void:
+    
+    ## note currently only works properly for closed loop
+    var closed_loop = true
+    
+    for i in curve3d.point_count:
+        var i2 = (i+1) % curve3d.point_count
+        var i3 = (i+2) % curve3d.point_count
+        
+        var prev_pos = curve3d.get_point_position(i) # prev
+        var pos = curve3d.get_point_position(i2) # this
+        var next_pos = curve3d.get_point_position(i3) # next
+        
+        var offset_prev: Vector3 = prev_pos - pos
+        var offset_next: Vector3 = next_pos - pos
+
+        offset_prev = offset_prev.normalized()
+        offset_next = offset_next.normalized()
+        
+        # our stratergy was to add both offsets together and normalize them
+        # as they are opposite we need to minus
+        var in_vector: Vector3 = offset_prev - offset_next
+        in_vector = in_vector.normalized()
+        in_vector *= strength # then to multiply by curve strength
+    
+        curve3d.set_point_in(i2, in_vector)
+        curve3d.set_point_out(i2, -in_vector)
+    
+    if closed_loop:
+        # set last point in as opposite to first point out
+        curve3d.set_point_in(curve3d.point_count - 1, -curve3d.get_point_out(0))
+
+
+
+
