@@ -1,22 +1,18 @@
 """
+interpolate an array of floats
 
-method of lerping an array, i made it for this rough polar data for a boat from here:
+a graph of data for example could be represented as an array of float values, assumed of equal step
 
+this quick dirty method will not smooth out the graph, so concider generating the data from numpy with many steps
+numpy is capable of reinterpolating data to be suitable for usage
+
+i made it for this rough polar data for a boat from here:
 https://www.researchgate.net/publication/235639420_Omni-Directional_Camera_and_Fuzzy_Logic_Path_Planner_for_Autonomous_Sailboat_Navigation
-
-
-this could be used to translate a position from 0 to 1 (min to max) to a curve for example
-
-
-the input array must be assumed of equal increments, for example if years, 10, 20, 30, 40, 50
-cleaning data like this can be achieved using numpy in python
-
 
 """
 
-
+## example data could be higher resolution, can use numpy for this (make a cubic spline)
 var data = [0.0, 5.0, 6.0, 5.5, 5.0, 5.0]
-
 
 ## input an array of data like floats or colors
 ## get the value at a position from 0 to 1, where 0 is the start and 1 the end of the array
