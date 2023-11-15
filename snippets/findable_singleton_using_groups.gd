@@ -2,6 +2,8 @@
 
 this pattern allows finding a single node in the scene (using groups), like singleton
 
+i'm often using groups to find singletons as the pattern is decoupled
+
 """
 
 func _ready():
