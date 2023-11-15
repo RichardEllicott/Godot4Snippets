@@ -1,6 +1,6 @@
 """
 
-fast boilerplate for SurfaceTool, which is probabally ones of the easiest way to draw meshes (it does the normals automaticly)
+fast boilerplate for SurfaceTool, which is probabally ones of the easiest way to draw meshes (it does the normals and smooth automaticly)
 
 making the boilerplate functions like this allows fast typing for drawing the geometry with simple commands like "make_quad"
 
