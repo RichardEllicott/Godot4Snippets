@@ -1,5 +1,11 @@
 """
 
+PROBABALLY WILL REMOVE THIS FOLDER AND FILE 🗑 ... i never find it, new one in main folder
+
+
+
+
+
 fast boilerplate for SurfaceTool, which is probabally ones of the easiest way to draw meshes (it does the normals and smooth automaticly)
 
 making the boilerplate functions like this allows fast typing for drawing the geometry with simple commands like "make_quad"
