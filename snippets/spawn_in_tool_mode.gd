@@ -7,3 +7,6 @@ func _ready():
     # The line below is required to make the node visible in the Scene tree dock
     # and persist changes made by the tool script to the saved scene file.
     node.set_owner(get_tree().edited_scene_root)
+
+    # or
+    node.owner = get_tree().edited_scene_root
