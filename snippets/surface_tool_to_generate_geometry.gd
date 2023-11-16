@@ -1,43 +1,66 @@
 """
 
-SurfaceTool is the easiest way to draw geometry imo
-it generates normals automaticly
-
-apparently for things that change each frame ImmediateMesh is more suited
-but it doesn't generate normals
-
-tutorial here:
+SurfaceTool is the only geometry tool that can generate normals automaticly (very useful), and has complex features like importing meshes
 https://docs.godotengine.org/en/stable/tutorials/3d/procedural_geometry/surfacetool.html
 
-demos here of a quad and smooth tube
+(ImmediateMesh is apparently faster, more suited for realtime)
+
+you need one SurfaceTool per a material if you draw the materials out of order, so this boilerplate hides that fact
+
+-materials must have at least one material
+-set material (int) as the current one to draw with
+-get_mesh will return the final mesh
 
 """
 @tool
 extends Node3D
 
-## get a surface tool in triangle mode
-var _surface_tool
-func get_surface_tool() -> SurfaceTool:
-    if not _surface_tool:
-        _surface_tool = SurfaceTool.new()
-        _surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-#        _surface_tool.set_smooth_group(-1) # this would make flat shading
-    return _surface_tool
+## must contain at least one material
+@export var materials: Array[Material] = []
+## the current set material, set this number as you draw different materials
+@export var material: int = 0
 
-## add a vert, we must add 3 for a triangle
-## i only use set_uv and add_vertex, they must be called in this order
-## normals will be generated
-func add_vert(pos, uv_pos):
-    get_surface_tool().set_uv(uv_pos)
-    get_surface_tool().add_vertex(pos)
+## get the correct surface tool, generates a surface tool for each material
+var _surface_tools = []
+func get_surface_tool() -> SurfaceTool:
+    while  material >= _surface_tools.size():
+        var st = SurfaceTool.new()
+        st.begin(Mesh.PRIMITIVE_TRIANGLES) # set to trinagle mode
+#        st.begin(Mesh.PRIMITIVE_LINES) # line mode leaves the lines too thin!
+        _surface_tools.append(st)
+        
+    var surface_tool = _surface_tools[material] # tool to return
+    surface_tool.set_material(materials[material]) # ensure has correct material set
+    return surface_tool
 
 ## get the final mesh, generates normals and tangents
+## uses multiple surface tools for the multiple materials
 func get_mesh() -> Mesh:
-    get_surface_tool().generate_normals() # using flip faces here gives bug
-    get_surface_tool().generate_tangents()
-    return get_surface_tool().commit()
+    var mesh: Mesh
+    for surface_tool in _surface_tools:
+        surface_tool.generate_normals()
+        surface_tool.generate_tangents()
+        mesh = surface_tool.commit(mesh)
+    return mesh
 
-## make a simple quad, default is a 2x2 quad facing up (+y)
+## if we want to draw new geometry, we must clear the old surface tools they will be full of old data
+func clear():
+    _surface_tools = [] # clearing the old tools (only method that works so far)
+    for surface_tool in _surface_tools: # the manual leads me to belive i didn't have to delete the old SurfaceTools?
+        surface_tool.clear()
+
+## make any convex polygon shape
+func make_ngon(vertices: PackedVector3Array, uvs: PackedVector2Array):    
+    
+    if flip_faces: # we use a dirty copy here, it just allows a global "flip_faces" setting
+        vertices = vertices.duplicate()
+        vertices.reverse()
+        uvs = uvs.duplicate()
+        uvs.reverse()
+    
+    get_surface_tool().add_triangle_fan(vertices, uvs)
+
+## make a simple quad example, default is a 2x2 quad facing up (+y)
 func make_quad(
     nw: Vector3 = Vector3(-1, 0, -1), # n is -z
     ne: Vector3 = Vector3(1, 0, -1),
@@ -49,81 +72,43 @@ func make_quad(
     se_uv: Vector2 = Vector2(1, 1),
     sw_uv: Vector2 = Vector2(0, 1)
     ):
-          
-    add_vert(nw,nw_uv)
-    add_vert(ne,ne_uv)
-    add_vert(se,se_uv)
-    
-    add_vert(se,se_uv)
-    add_vert(sw,sw_uv)
-    add_vert(nw,nw_uv)
+    make_ngon([nw,ne,se,sw], [nw_uv,ne_uv,se_uv,sw_uv])
 
-## trinagle only based on the previous quad code
-func make_triangle(
-    nw: Vector3 = Vector3(-1, 0, -1), # n is -z
-    ne: Vector3 = Vector3(1, 0, -1),
-    se: Vector3 = Vector3(1, 0, 1),
-    nw_uv: Vector2 = Vector2(0, 0),
-    ne_uv: Vector2 = Vector2(1, 0),
-    se_uv: Vector2 = Vector2(1, 1)
-    ):
-    
-    add_vert(nw,nw_uv)
-    add_vert(ne,ne_uv)
-    add_vert(se,se_uv)
+## easy function to create childs in tool mode, used for demo here
+static func get_or_create_child(parent: Node,node_name: String, node_type = Node) -> Node:        
+    var node = parent.get_node_or_null(node_name) # get the node if present
+    if not is_instance_valid(node): # if no node found make one
+        node = node_type.new()
+        node.name = node_name
+        parent.add_child(node)
+        if Engine.is_editor_hint():
+            node.set_owner(parent.get_tree().edited_scene_root) # show in tool mode
+#    assert(node is node_type) # best to check the type matches
+    return node
 
-## make a simple quad
-func macro_test_quad():
+## make a child mesh of current node, a row of quads with different materials
+func macro_test_boilerplate_materials():
     
-#    get_surface_tool().clear() # doesn't work
-    _surface_tool = null # need to clear surface tool for some reason
-
-    make_quad()
+    clear() ## clear any old data
     
+    var offset = Vector3(2,0,0) ## we move this offset
+    
+    var nw: Vector3 = Vector3(-1, 0, -1) # n is -z
+    var ne: Vector3 = Vector3(1, 0, -1)
+    var se: Vector3 = Vector3(1, 0, 1)
+    var sw: Vector3 = Vector3(-1, 0, 1)
+    
+    for i in 8: # make 8 quads
+        material = i % materials.size() # set their materials alternatly
+        make_quad(nw,ne,se,sw)
+        nw += offset
+        ne += offset
+        se += offset
+        sw += offset
+        
+    var positions = []
+    
+    var mesh: Mesh = get_mesh()
     var mesh_instance: MeshInstance3D = get_or_create_child(self, "MeshInstance3D", MeshInstance3D)
-    mesh_instance.mesh = get_mesh()
-
-## make a tube of quads
-func make_tube(from_points: Array, to_points: Array):
-    
-    var mod = from_points.size()
-    
-    for i in mod:
-        
-        var i1 = (i + 1) % mod
-        
-        var a = from_points[i]
-        var b = from_points[i1]
-        var c = to_points[i1]
-        var d = to_points[i]
-        
-        if not flip_faces:
-            make_quad(a,b,c,d)
-        else:
-            make_quad(d,c,b,a)
-
-## make a smooth shaded tube
-func macro_test_tube():
-    
-    _surface_tool = null
-    
-    var from_points = []
-    var to_points = []
-    
-    for i in div:
-        var theta = deg_to_rad(float(i) / float(div) * 360.0)
-        
-        var pos = Vector3(cos(theta), 0.0, sin(theta)) * radius
-        pos *= radius
-        from_points.append(pos)
-        pos += Vector3(0,length,0)
-        to_points.append(pos)
-    
-    print(from_points)
-    print(to_points)
-    make_tube(from_points, to_points)
-    
-    var mesh_instance: MeshInstance3D = get_or_create_child(self, "MeshInstance3D", MeshInstance3D)
-    
-    mesh_instance.mesh = get_mesh()
+    mesh_instance.mesh = mesh
 
