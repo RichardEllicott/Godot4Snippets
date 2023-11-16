@@ -21,16 +21,20 @@ make_quad() # make a second quad
 get_or_create_child(self, "MeshInstance3D", MeshInstance3D).mesh = get_mesh() # create new child with this mesh
 
 """
+
 @tool
 extends Node3D
+
+
+## multiple material boilerplate, allows using multiple materials without confusion
 
 ## must contain at least one material
 @export var materials: Array[Material] = []
 ## the current set material, set this number as you draw different materials
 @export var material: int = 0
 
-## get the correct surface tool, generates a surface tool for each material
 var _surface_tools = []
+## get the correct surface tool, generates a surface tool for each material
 func get_surface_tool() -> SurfaceTool:
     while  material >= _surface_tools.size():
         var st = SurfaceTool.new()
@@ -58,10 +62,13 @@ func clear():
     for surface_tool in _surface_tools: # the manual leads me to belive i didn't have to delete the old SurfaceTools?
         surface_tool.clear()
 
-## make any convex polygon shape
+## flip the normals
+@export var flip_faces: bool = false
+
+## convex only (uses a triangle fan)
 func make_ngon(vertices: PackedVector3Array, uvs: PackedVector2Array):    
     
-    if flip_faces: # we use a dirty copy here, it just allows a global "flip_faces" setting
+    if flip_faces: # we use a dirty copy here
         vertices = vertices.duplicate()
         vertices.reverse()
         uvs = uvs.duplicate()
@@ -82,6 +89,7 @@ func make_quad(
     sw_uv: Vector2 = Vector2(0, 1)
     ):
     make_ngon([nw,ne,se,sw], [nw_uv,ne_uv,se_uv,sw_uv])
+    
 
 ## easy function to create childs in tool mode, used for demo here
 static func get_or_create_child(parent: Node,node_name: String, node_type = Node) -> Node:        
@@ -94,12 +102,10 @@ static func get_or_create_child(parent: Node,node_name: String, node_type = Node
             node.set_owner(parent.get_tree().edited_scene_root) # show in tool mode
 #    assert(node is node_type) # best to check the type matches
     return node
-
-
-## create a child MeshInstance3D with our generated mesh
-## also add static body collision
-func create_child_with_mesh(child_name = "MeshInstance3D", collision = true):
     
+## create a child MeshInstance3D with our generated mesh
+## also add static body collision same as if we had manually generated a trimesh
+func create_child_with_mesh(child_name = "MeshInstance3D", collision = true):
     var mesh: Mesh = get_mesh()
     var mesh_instance: MeshInstance3D = get_or_create_child(self, child_name, MeshInstance3D)
     mesh_instance.mesh = mesh
@@ -107,10 +113,8 @@ func create_child_with_mesh(child_name = "MeshInstance3D", collision = true):
         var static_body: StaticBody3D = get_or_create_child(mesh_instance, "StaticBody3D", StaticBody3D)
         var coll_shape: CollisionShape3D = get_or_create_child(static_body, "CollisionShape3D", CollisionShape3D)
         coll_shape.shape = mesh.create_trimesh_shape()
-
-
-
-## make a child mesh of current node, a row of quads with different materials
+        
+## make a row of quds with different materials to test this boilerplate
 func macro_test_boilerplate_materials():
     
     clear() ## clear any old data
@@ -130,9 +134,6 @@ func macro_test_boilerplate_materials():
         se += offset
         sw += offset
         
-    var positions = []
-    
-    var mesh: Mesh = get_mesh()
-    var mesh_instance: MeshInstance3D = get_or_create_child(self, "MeshInstance3D", MeshInstance3D)
-    mesh_instance.mesh = mesh
+    create_child_with_mesh()
+
 
