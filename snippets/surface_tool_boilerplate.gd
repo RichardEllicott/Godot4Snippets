@@ -11,6 +11,15 @@ you need one SurfaceTool per a material if you draw the materials out of order, 
 -set material (int) as the current one to draw with
 -get_mesh will return the final mesh
 
+example:
+
+
+make_quad() # make a quad
+material = 1 # set the second material
+make_quad() # make a second quad
+
+get_or_create_child(self, "MeshInstance3D", MeshInstance3D).mesh = get_mesh() # create new child with this mesh
+
 """
 @tool
 extends Node3D
