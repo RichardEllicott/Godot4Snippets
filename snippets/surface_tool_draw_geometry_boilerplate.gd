@@ -57,7 +57,7 @@ func clear():
 ## flip the normals
 @export var flip_faces: bool = false
 
-## convex only (uses a triangle fan)
+## convex only (uses a triangle fan), this is the easiest way to use surface tool in triangle mode, no need to use "add vertex" this way
 func make_ngon(vertices: PackedVector3Array, uvs: PackedVector2Array):    
     
     if flip_faces: # we use a dirty copy here
