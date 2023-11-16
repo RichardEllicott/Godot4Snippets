@@ -7,13 +7,8 @@ https://docs.godotengine.org/en/stable/tutorials/3d/procedural_geometry/surfacet
 
 this boilerplate makes multiple SurfaceTools depending how many materials you use
 
-example:
-
-make_quad() # make a quad
-material = 1 # set the second material
-make_quad() # make a second quad (warning it's in the same position!)
-
-get_or_create_child(self, "MeshInstance3D", MeshInstance3D).mesh = get_mesh() # create new child with this mesh
+for an example of usage see the function "macro_test_boilerplate_materials()"
+it shows drawing all our materials on some quads
 
 """
 
@@ -113,18 +108,25 @@ func macro_test_boilerplate_materials():
     
     var offset = Vector3(2,0,0) ## we move this offset
     
-    var nw: Vector3 = Vector3(-1, 0, -1) # n is -z
-    var ne: Vector3 = Vector3(1, 0, -1)
-    var se: Vector3 = Vector3(1, 0, 1)
-    var sw: Vector3 = Vector3(-1, 0, 1)
+    var verts = [
+        Vector3(-1, 0, -1),
+        Vector3(1, 0, -1),
+        Vector3(1, 0, 1),
+        Vector3(-1, 0, 1)
+    ]
     
-    for i in 8: # make 8 quads
+    var uvs = [
+        Vector2(0, 0),
+        Vector2(1, 0),
+        Vector2(1, 1),
+        Vector2(0, 1)
+    ]
+    
+    for i in 16: # make 16 quads
         material = i % materials.size() # set their materials alternatly
-        make_quad(nw,ne,se,sw)
-        nw += offset
-        ne += offset
-        se += offset
-        sw += offset
+        make_ngon(verts, uvs)
+        for i2 in verts.size(): # move quad along
+            verts[i2] += offset
         
     create_child_with_mesh()
 
