@@ -20,9 +20,6 @@ get_or_create_child(self, "MeshInstance3D", MeshInstance3D).mesh = get_mesh() # 
 @tool
 extends Node3D
 
-
-## multiple material boilerplate, allows using multiple materials without confusion
-
 ## must contain at least one material
 @export var materials: Array[Material] = []
 ## the current set material, set this number as you draw different materials
