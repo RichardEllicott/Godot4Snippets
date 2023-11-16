@@ -1,22 +1,17 @@
 """
 
-SurfaceTool is the only geometry tool that can generate normals automaticly (very useful), and has complex features like importing meshes
+SurfaceTool is the more advanced mesh building tool that can generate normals automaticly, and has complex features like importing meshes
 https://docs.godotengine.org/en/stable/tutorials/3d/procedural_geometry/surfacetool.html
 
-(ImmediateMesh is apparently faster, more suited for realtime)
+(ImmediateMesh is apparently faster, itself more suited for realtime)
 
-you need one SurfaceTool per a material if you draw the materials out of order, so this boilerplate hides that fact
-
--materials must have at least one material
--set material (int) as the current one to draw with
--get_mesh will return the final mesh
+this boilerplate supports multiple materials that can then be drawn out of sequence
 
 example:
 
-
 make_quad() # make a quad
 material = 1 # set the second material
-make_quad() # make a second quad
+make_quad() # make a second quad (warning it's in the same position!)
 
 get_or_create_child(self, "MeshInstance3D", MeshInstance3D).mesh = get_mesh() # create new child with this mesh
 
