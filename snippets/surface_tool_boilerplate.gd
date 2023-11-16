@@ -95,6 +95,21 @@ static func get_or_create_child(parent: Node,node_name: String, node_type = Node
 #    assert(node is node_type) # best to check the type matches
     return node
 
+
+## create a child MeshInstance3D with our generated mesh
+## also add static body collision
+func create_child_with_mesh(child_name = "MeshInstance3D", collision = true):
+    
+    var mesh: Mesh = get_mesh()
+    var mesh_instance: MeshInstance3D = get_or_create_child(self, child_name, MeshInstance3D)
+    mesh_instance.mesh = mesh
+    if collision:
+        var static_body: StaticBody3D = get_or_create_child(mesh_instance, "StaticBody3D", StaticBody3D)
+        var coll_shape: CollisionShape3D = get_or_create_child(static_body, "CollisionShape3D", CollisionShape3D)
+        coll_shape.shape = mesh.create_trimesh_shape()
+
+
+
 ## make a child mesh of current node, a row of quads with different materials
 func macro_test_boilerplate_materials():
     
