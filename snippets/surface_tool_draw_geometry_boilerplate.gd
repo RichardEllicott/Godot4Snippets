@@ -5,7 +5,7 @@ https://docs.godotengine.org/en/stable/tutorials/3d/procedural_geometry/surfacet
 
 (ImmediateMesh is apparently faster, itself more suited for realtime)
 
-this boilerplate supports multiple materials that can then be drawn out of sequence
+this boilerplate makes multiple SurfaceTools depending how many materials you use
 
 example:
 
