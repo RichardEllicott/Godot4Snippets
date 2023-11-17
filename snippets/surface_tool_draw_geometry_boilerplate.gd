@@ -20,6 +20,7 @@ extends Node3D
 ## the current set material, set this number as you draw different materials
 @export var material: int = 0
 
+""" TO DELETE (old version)
 var _surface_tools = []
 ## get the correct surface tool, generates a surface tool for each material
 func get_surface_tool() -> SurfaceTool:
@@ -32,6 +33,26 @@ func get_surface_tool() -> SurfaceTool:
     var surface_tool = _surface_tools[material] # tool to return
     surface_tool.set_material(materials[material]) # ensure has correct material set
     return surface_tool
+"""
+
+## get the correct surface tool, generates a surface tool for each material
+func get_surface_tool() -> SurfaceTool:
+    
+    var materials_size = materials.size()
+    assert(materials_size > 0)
+    
+    if _surface_tools.size() != materials_size: # if not correct size, rebuild
+        _surface_tools = []
+        _surface_tools.resize(materials_size)
+        for i in materials_size:
+            var surface_tool = SurfaceTool.new()
+            surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES) # set to trinagle mode
+            surface_tool.set_material(materials[i])
+            _surface_tools[i] = surface_tool
+
+    return _surface_tools[material]
+
+
 
 ## get the final mesh, generates normals and tangents
 ## uses multiple surface tools for the multiple materials
