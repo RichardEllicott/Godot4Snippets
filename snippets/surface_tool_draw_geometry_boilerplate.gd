@@ -20,7 +20,8 @@ extends Node3D
 ## the current set material, set this number as you draw different materials
 @export var material: int = 0
 
-""" TO DELETE (old version)
+## TO DELETE (old version)
+""" 
 var _surface_tools = []
 ## get the correct surface tool, generates a surface tool for each material
 func get_surface_tool() -> SurfaceTool:
