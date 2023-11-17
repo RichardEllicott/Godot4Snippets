@@ -8,7 +8,7 @@ method for getting circle points in 3D space
 
 ## get circle points in 3d space, circle facing z
 ## build the transform with an origin and basis
-## for radius scale the basis (NOT WORKING USE radius):
+## for radius scale the basis, i believe the "radius" is redundant
 ## transform3d.basis = transform3d.basis.scaled(Vector3(1,1,1) * 2)
 static func circle_3d_points(transform3d: Transform3D, div: int, radius: float = 1.0) -> Array[Vector3]:
     var points: Array[Vector3] = []
