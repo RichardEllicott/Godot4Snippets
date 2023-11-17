@@ -19,3 +19,13 @@ func spherecast(_transform, radius):
         sphere_shape = SphereShape3D.new()
     sphere_shape.radius = _radius
     return shapecast(sphere_shape, _transform)
+
+## raycast
+func raycast(from: Vector3, to: Vector3, exclude: Array = []):
+    var query = PhysicsRayQueryParameters3D.new()
+    query.from = from
+    query.to = to
+    query.exclude = exclude
+#    query.collide_with_areas = false
+#    query.collide_with_bodies = true
+    return get_world_3d().get_direct_space_state().intersect_ray(query)
