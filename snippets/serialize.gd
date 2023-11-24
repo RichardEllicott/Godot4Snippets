@@ -25,17 +25,19 @@ func serialize() -> Dictionary:
     return data
     
 ## deserialize the vars from a dictionary
-func deserialize(data: Dictionary):
+func deserialize(data: Dictionary) -> void:
     for _var in serialize_vars:
         set(_var, data[_var])
 
 ## save the vars to a file
-func save_data():
+func save_data() -> void:
     var file = FileAccess.open(save_path, FileAccess.WRITE)
     file.store_var(serialize())
 
 ## restore the vars from a file
-func load_data():
+func load_data() -> int:
     if FileAccess.file_exists(save_path):
         var file: FileAccess = FileAccess.open(save_path, FileAccess.READ)
         deserialize(file.get_var())
+        return 0
+    return 1
