@@ -6,14 +6,16 @@ however it is a bit of a pain to set up, especially in 3D, this objects demos a 
 
 """
 
-
-
 ## a 3d array
 ## internally uses one giant long array, even a packed one
 ## this makes it more effecient than nested arrays
 ## note the array does make an assumption z is the "floor" when generating a string
 ## EXAMPLE USAGE:
-
+## 
+## var array2d = Array3D.new(Vector3i(8,8,1)) # 2D var array
+## var array3d = Array3D.new(Vector3i(8,8,8), PackedInt32Array()) # 3D int array
+##
+## WARNING, using 3 dimensions can use a crazy amount of memory!
 class Array3D:
     
     var size: Vector3i # dimensions of the 3D array
@@ -65,9 +67,6 @@ class Array3D:
             ## but it MUST have the correct dimensions
             assert(array.size() == target_size)
             
-    
-        
-        
     ## get the value at a position, for 2D, use z=0
     func get_value(pos: Vector3i):
         var i = pos.x # inline to avoid passing value types
@@ -94,7 +93,7 @@ class Array3D:
             s += "\n" # seperate z floors with a gap        
         return s
 
-    
+## example usage of the array
 func macro_test_array3d():
     
     # using PackedInt32Array
