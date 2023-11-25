@@ -7,8 +7,6 @@ however it is a bit of a pain to set up, especially in 3D, this objects demos a 
 """
 
 
-
-
 ## a 3d array
 ## internally uses one giant long array, even a packed one
 ## this makes it more effecient than nested arrays
@@ -63,11 +61,11 @@ class Array3D:
         i += pos.z * size.x * size.y
         return array[i]
         
-    func set_value(pos: Vector3i, val):
+    func set_value(pos: Vector3i, value):
         var i = pos.x # inline to avoid passing value types
         i += pos.y * size.x
         i += pos.z * size.x * size.y
-        array[i] = val
+        array[i] = value
     
     ## gets a string to visualize the array
     ## the string is actually the same serial array but arranged to look like floors
@@ -85,7 +83,7 @@ class Array3D:
     
 func macro_test_array3d():
     
-    # using PackedInt32Array, it will be full of 0s
+    # using PackedInt32Array
     var array3d = Array3D.new(Vector3i(8,8,1), PackedInt32Array())
     array3d.set_value(Vector3i(1, 3, 0), 4)
     array3d.set_value(Vector3i(2, 2, 0), 4)
@@ -96,7 +94,7 @@ func macro_test_array3d():
     print("ARRAY:")
     print(array3d.get_string())
     
-    # using a plain Array, it will be full of nulls
+    # using Array
     array3d = Array3D.new(Vector3i(8,8,1), [])
     array3d.set_value(Vector3i(1, 3, 0), 4)
     array3d.set_value(Vector3i(2, 2, 0), 4)
@@ -106,4 +104,3 @@ func macro_test_array3d():
     array3d.resize(Vector3i(4,4,2))
     print("ARRAY:")
     print(array3d.get_string())
-
