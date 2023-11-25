@@ -112,9 +112,9 @@ class Array3D:
             s += "\n" # seperate z floors with a gap        
         return s
 
-## a 3D array can get huge
-## we can use a dictionary for a dimensionless array instead
+## a 3D array can get huge so sometimes it's better just to use a dictionary, and also far easier as this small object shows
 ## this would use less memory if sparsely filled, more if full
+## it has an advantage that it is never full, we don't have to specify dimensions
 class DictArray3D:
     
     var _dictionary: Dictionary
