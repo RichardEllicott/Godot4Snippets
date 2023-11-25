@@ -85,7 +85,7 @@ class Array3D:
     
 func macro_test_array3d():
     
-    # using PackedInt32Array
+    # using PackedInt32Array, it will be full of 0s
     var array3d = Array3D.new(Vector3i(8,8,1), PackedInt32Array())
     array3d.set_value(Vector3i(1, 3, 0), 4)
     array3d.set_value(Vector3i(2, 2, 0), 4)
@@ -96,7 +96,7 @@ func macro_test_array3d():
     print("ARRAY:")
     print(array3d.get_string())
     
-    # using Array
+    # using a plain Array, it will be full of nulls
     array3d = Array3D.new(Vector3i(8,8,1), [])
     array3d.set_value(Vector3i(1, 3, 0), 4)
     array3d.set_value(Vector3i(2, 2, 0), 4)
