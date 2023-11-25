@@ -6,9 +6,6 @@ however it is a bit of a pain to set up, especially in 3D, this objects demos a 
 
 """
 
-
-
-
 ## a 3d array
 ## internally uses one giant long array, even a packed one
 ## this makes it more effecient than nested arrays
@@ -25,14 +22,13 @@ class Array3D:
     var _array # the array itself (private)
     
     ## setting the size may trigger the array to have to copy (slow)
+    ## may loose data if we crop the area
     var size: Vector3i:
         get:
             return _size
         set(val):
             set_size(val)
     
-    ## resize entire array (expensive)
-    ## will copy all data it can, drop data that doesn't fit   
     func set_size(new_size: Vector3i):
         
         if new_size != _size: # only resize if we change the size
@@ -99,17 +95,22 @@ class Array3D:
         var i = pos.x + pos.y * _size.x # inline
         _array[i] = value
     
-    ## gets a string to visualize the array
-    ## the string is actually the same serial array but arranged to look like floors
-    ## string can therefore be pasted back into godot
-    func get_string() -> String:
+    ## convert the object to a string representation
+    ## pastable for the var version anyway
+    func _to_string() -> String:
+        
+        var indent = "    "
         var s = ""
+        s += "Array3D(%s, [\n" % var_to_str(_size)
         for z in _size.z: # for all floors
-            for y in _size.y: # for all rows   
+            for y in _size.y: # for all rows
+                s += indent # lines start with indent
                 for x in _size.x: # add a csv style row
-                    s += "%s, " % get_value(Vector3i(x,y,z))
+                    s += "%s, " % var_to_str(get_value(Vector3i(x,y,z)))
                 s += "\n"
-            s += "\n" # seperate z floors with a gap        
+            if z != _size.z - 1:
+                s += "\n" # seperate z floors with a gap        
+        s += "])"
         return s
 
 ## a 3D array can get huge so sometimes it's better just to use a dictionary, and also far easier as this small object shows
