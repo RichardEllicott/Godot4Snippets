@@ -8,6 +8,7 @@ however it is a bit of a pain to set up, especially in 3D, this objects demos a 
 
 
 
+
 ## a 3d array
 ## internally uses one giant long array, even a packed one
 ## this makes it more effecient than nested arrays
@@ -54,7 +55,8 @@ class Array3D:
         size = _size
         array = _array
         array.resize(size.x * size.y * size.z)
-    
+        
+    ## get the value at a position, for 2D, use z=0
     func get_value(pos: Vector3i):
         var i = pos.x # inline to avoid passing value types
         i += pos.y * size.x
@@ -83,24 +85,25 @@ class Array3D:
     
 func macro_test_array3d():
     
+    # using PackedInt32Array
     var array3d = Array3D.new(Vector3i(8,8,1), PackedInt32Array())
     array3d.set_value(Vector3i(1, 3, 0), 4)
-
     array3d.set_value(Vector3i(2, 2, 0), 4)
-
     array3d.set_value(Vector3i(2, 1, 0), 4)
-
-    print("PRINT:")
+    print("ARRAY:")
     print(array3d.get_string())
-    
     array3d.resize(Vector3i(4,4,2))
-
-    print("PRINT:")
+    print("ARRAY:")
     print(array3d.get_string())
     
-    
-#    print(array3d.array)
-    
-    
-    
-    pass
+    # using Array
+    array3d = Array3D.new(Vector3i(8,8,1), [])
+    array3d.set_value(Vector3i(1, 3, 0), 4)
+    array3d.set_value(Vector3i(2, 2, 0), 4)
+    array3d.set_value(Vector3i(2, 1, 0), 4)
+    print("ARRAY:")
+    print(array3d.get_string())
+    array3d.resize(Vector3i(4,4,2))
+    print("ARRAY:")
+    print(array3d.get_string())
+
