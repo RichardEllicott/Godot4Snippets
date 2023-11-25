@@ -7,6 +7,8 @@ however it is a bit of a pain to set up, especially in 3D, this objects demos a 
 """
 
 
+
+
 ## a 3d array
 ## internally uses one giant long array, even a packed one
 ## this makes it more effecient than nested arrays
@@ -110,11 +112,31 @@ class Array3D:
             s += "\n" # seperate z floors with a gap        
         return s
 
+## a 3D array can get huge
+## we can use a dictionary for a dimensionless array instead
+## this would use less memory if sparsely filled, more if full
+class DictArray3D:
+    
+    var _dictionary: Dictionary
+    func _init():
+        _dictionary = {}
+        
+    func set_value(pos: Vector3i, value):
+        if value == null:
+            _dictionary.erase(pos)
+        else:
+            _dictionary[pos] = value
+        
+    func get_value(pos: Vector3i):
+        return _dictionary.get(pos)
+    
 ## example usage of the array
 func macro_test_array3d():
     
+    var array3d 
+    
     # using PackedInt32Array
-    var array3d = Array3D.new(Vector3i(8,8,1), PackedInt32Array())
+    array3d = Array3D.new(Vector3i(8,8,1), PackedInt32Array())
     array3d.set_value(Vector3i(1, 3, 0), 4)
     array3d.set_value(Vector3i(2, 2, 0), 4)
     array3d.set_value(Vector3i(2, 1, 0), 4)
@@ -134,3 +156,14 @@ func macro_test_array3d():
     array3d.size = Vector3i(4,4,2)
     print("ARRAY:")
     print(array3d.get_string())
+    
+    # dict version for comparison
+    array3d = DictArray3D.new()
+    array3d.set_value(Vector3i(1, 3, 0), 4)
+    array3d.set_value(Vector3i(2, 2, 0), 4)
+    array3d.set_value(Vector3i(2, 1, 0), 4)
+    print("ARRAY:")
+    print(array3d._dictionary)
+    array3d.size = Vector3i(4,4,2)
+    print("ARRAY:")
+    print(array3d._dictionary)
