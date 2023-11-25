@@ -62,12 +62,8 @@ class Array3D:
             _size = new_size
     
     ## we can optionally pass an array like PackedInt32Array()
-    func _init(size, array = []):
-        
-        if size is Vector2i:
-            size = Vector3i(size.x, size.y, 1)
-        assert(size is Vector3i)
-                
+    func _init(size: Vector3i, array = []):
+                        
         _size = size
         _array = array
         
@@ -102,7 +98,6 @@ class Array3D:
     ## convert the object to a string representation
     ## pastable for the var version anyway
     func _to_string() -> String:
-        
         var indent = "    "
         var s = ""
         s += "Array3D(%s, [\n" % var_to_str(_size)
