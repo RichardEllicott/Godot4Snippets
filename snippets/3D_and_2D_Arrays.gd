@@ -7,6 +7,7 @@ however it is a bit of a pain to set up, especially in 3D, this objects demos a 
 """
 
 
+
 ## a 3d array
 ## internally uses one giant long array, even a packed one
 ## this makes it more effecient than nested arrays
@@ -48,11 +49,24 @@ class Array3D:
                     
         array = new_data
         size = new_size
-
-    func _init(_size: Vector3i = Vector3i(8,8,1), _array = PackedInt32Array()):
+    
+    ## we can optionally pass an array like PackedInt32Array()
+    func _init(_size: Vector3i, _array = []):
+                
         size = _size
         array = _array
-        array.resize(size.x * size.y * size.z)
+        
+        var target_size = size.x * size.y * size.z
+        
+        if array.size() == 0: # typically the array size should be 0 at this point
+            array.resize(target_size) # this will crash if not a type of Array
+        else:
+            ## we can pass in a filled array if we like
+            ## but it MUST have the correct dimensions
+            assert(array.size() == target_size)
+            
+    
+        
         
     ## get the value at a position, for 2D, use z=0
     func get_value(pos: Vector3i):
