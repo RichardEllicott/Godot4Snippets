@@ -10,7 +10,8 @@ resizing the array
 
 """
 
-## a 3d array
+
+## a 3d array 25/11/2023
 ## internally uses one giant long array, even a packed one
 ## this makes it more effecient than nested arrays
 ## note the array does make an assumption z is the "floor" when generating a string
@@ -20,6 +21,7 @@ resizing the array
 ## var array3d = Array3D.new(Vector3i(8,8,8), PackedInt32Array()) # 3D int array
 ##
 ## WARNING, using 3 dimensions can use a crazy amount of memory!
+
 class Array3D:
     
     var _size: Vector3i # dimensions of array (private)
@@ -61,8 +63,14 @@ class Array3D:
             _array = new_data
             _size = new_size
     
+
+    
     ## we can optionally pass an array like PackedInt32Array()
     func _init(size: Vector3i, array = []):
+        
+        if not array is Array: # we try to only allow "Array" or "Packed*"
+            var s = var_to_str(array)
+            assert(s.begins_with("Packed"))
                         
         _size = size
         _array = array
@@ -84,7 +92,11 @@ class Array3D:
     func set_value(pos: Vector3i, value):
         var i = pos.x + pos.y * _size.x + pos.z * _size.x * _size.y # inline
         _array[i] = value
-    
+
+    ## get a 2D array
+    static func get_2d_array(size: Vector2i, array = []):
+        return Array3D.new(Vector3i(size.x, size.y, 1), array)
+        
     ## 2D functions assume z to be 0
     func get_value_2d(pos: Vector2i):
         var i = pos.x + pos.y * _size.x # inline
@@ -95,12 +107,23 @@ class Array3D:
         var i = pos.x + pos.y * _size.x # inline
         _array[i] = value
     
-    ## convert the object to a string representation
-    ## pastable for the var version anyway
-    func _to_string() -> String:
+    
+
+    
+    ## pastabe string simple version
+    func _to_string_simple() -> String:
         var indent = "    "
         var s = ""
-        s += "Array3D(%s, [\n" % var_to_str(_size)
+        s += "Array3D.new(%s, " % var_to_str(_size)
+        s += var_to_str(_array)
+        s += ")"
+        return s
+    
+    ## build the array as a printable string
+    func build_print_array():
+        var indent = "    "
+        var s = ""
+        s += "[\n"
         for z in _size.z: # for all floors
             for y in _size.y: # for all rows
                 s += indent # lines start with indent
@@ -109,8 +132,30 @@ class Array3D:
                 s += "\n"
             if z != _size.z - 1:
                 s += "\n" # seperate z floors with a gap        
-        s += "])"
+        s += "]"
         return s
+    
+    ## convert the object to a string representation
+    ## pastable for the var version anyway
+    func _to_string() -> String:
+        var indent = "    "
+        var s = ""
+        s += "Array3D.new(%s, " % var_to_str(_size)
+        
+        var s2 = "%s" # this string is for the array
+        var array_string: String  = var_to_str(_array)
+        if array_string.begins_with("Packed"): # we detected Packed arrays
+            s2 = array_string.split("(")[0] + "(%s)"
+            
+        s += s2
+        s += ")"
+        
+        s = s % build_print_array()
+        
+        return s
+        
+
+
 
 ## a 3D array can get huge so sometimes it's better just to use a dictionary, and also far easier as this small object shows
 ## this would use less memory if sparsely filled, more if full
