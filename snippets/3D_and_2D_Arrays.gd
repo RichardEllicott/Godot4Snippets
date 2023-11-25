@@ -4,6 +4,10 @@ it is possible to use a serial array like a 2D or 3D Array, some do not seem to 
 
 however it is a bit of a pain to set up, especially in 3D, this objects demos a 3D array
 
+this object allows creating an Array
+get and setting it in 2D/3D
+resizing the array
+
 """
 
 ## a 3d array
