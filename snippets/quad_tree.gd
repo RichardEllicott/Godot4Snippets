@@ -107,8 +107,8 @@ class QuadTree:
 
     
     ## when we make this object, the 
-    func _init(_dimensions: Rect2 = Rect2(Vector2(), Vector2(1,1))):
-        area = _dimensions
+    func _init(_area: Rect2 = Rect2(Vector2(), Vector2(1,1))):
+        area = _area
     
     ## when we add data, if we have less than max add here
     ## if we have more than max make a split
@@ -134,7 +134,7 @@ class QuadTree:
                     for j in 4:
                         var branch: QuadTree = branches[j]
                         
-                        if branch.dimensions.has_point(this_position):
+                        if branch.area.has_point(this_position):
                             branch.add_data(this_position, this_content)
                             redundant_check = true
                             break
@@ -150,7 +150,7 @@ class QuadTree:
             for i in 4:
                 var branch: QuadTree = branches[i]
                 
-                if branch.dimensions.has_point(_position):
+                if branch.area.has_point(_position):
                     branch.add_data(_position, data)
                     redundant_check = true
                     break
@@ -235,7 +235,7 @@ func macro_test_quadtree():
     var rand_pos = Vector2(rng.randfn(0.5, 0.25), rng.randfn(0.5, 0.25))
     
     
-    if qt.dimensions.has_point(rand_pos):
+    if qt.area.has_point(rand_pos):
         qt.add_data(rand_pos, "test%s" % count)
         count += 1
     
@@ -259,7 +259,7 @@ func macro_test_quadtree():
         debug_add_rect(rect)
     for pos in dots:
 #        print("🍊 ", pos)
-        debug_add_dot(pos)
+        debug_add_dot(pos, Color.from_hsv(rng.randf(), 1, 1))
     
 
 
