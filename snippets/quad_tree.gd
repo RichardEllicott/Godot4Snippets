@@ -9,10 +9,7 @@ similar to a BSP scheme but kinda easier as it uses squares
 this is a similar reason i belive people use octrees in 3D (they have always 8 childs)
 
 
-the useful part is the QuadTree class
-
-
-the rest of the code on this page makes an automatic demo
+the useful part is the QuadTree class, the rest of the code is just a visual demo so a bit messy!
 
 
 """
@@ -256,11 +253,11 @@ func macro_test_quadtree():
         
     for rect in rects:
 #        print("🍋 ", rect)
-        debug_add_rect(rect)
+        debug_add_rect(rect, Color.DARK_BLUE)
     for pos in dots:
 #        print("🍊 ", pos)
-        debug_add_dot(pos, Color.from_hsv(rng.randf(), 1, 1))
-    
+#        debug_add_dot(pos, Color.from_hsv(rng.randf(), 1, 1))
+        debug_add_dot(pos, Color.RED)
 
 
 
