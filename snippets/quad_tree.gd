@@ -9,7 +9,11 @@ similar to a BSP scheme but kinda easier as it uses squares
 this is a similar reason i belive people use octrees in 3D (they have always 8 childs)
 
 
-so far just an animation
+the useful part is the QuadTree class
+
+
+the rest of the code on this page makes an automatic demo
+
 
 """
 @tool
