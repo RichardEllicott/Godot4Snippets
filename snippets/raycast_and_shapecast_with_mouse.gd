@@ -4,6 +4,9 @@ query the world like for explosions
 
 """
 
+
+
+
 ## shapecast at a transform
 func shapecast(_shape: Shape3D, _transform: Transform3D) -> Array[Dictionary]:
     var query = PhysicsShapeQueryParameters3D.new()
@@ -20,6 +23,28 @@ func spherecast(_position: Vector3, _radius: float) -> Array[Dictionary]:
         sphere_shape = SphereShape3D.new()
     sphere_shape.radius = _radius
     return shapecast(sphere_shape, _transform)
+
+## sorted example
+## spherecast, then sort by nearest
+func sorted_spherecast(_position: Vector3, _radius: float) -> Array[Node3D]:
+    
+    var results = spherecast(_position, _radius)
+    
+    var sort = []
+    for result in results:
+        var node = result.collider
+        var distance = _position.distance_to(node.global_position)
+        sort.append([distance, node])
+        
+    sort.sort_custom(func(a, b): return a[0] < b[0]) # sort from nearest to furthest
+    
+    var ret: Array[Node3D] = []
+    
+    for val in sort:
+        ret.append(val[1])
+    
+    return ret
+
 
 
 
