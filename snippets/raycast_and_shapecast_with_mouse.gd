@@ -5,7 +5,7 @@ query the world like for explosions
 """
 
 ## shapecast at a transform
-func shapecast(_shape: Shape3D, _transform: Transform3D):
+func shapecast(_shape: Shape3D, _transform: Transform3D) -> Array[Dictionary]:
     var query = PhysicsShapeQueryParameters3D.new()
     query.transform = _transform
     query.collide_with_areas = true
@@ -14,11 +14,15 @@ func shapecast(_shape: Shape3D, _transform: Transform3D):
 
 ## with a sphere
 var sphere_shape
-func spherecast(_transform, radius):
+func spherecast(_position: Vector3, _radius: float) -> Array[Dictionary]:
+    var _transform = Transform3D(Vector3.RIGHT, Vector3.UP, Vector3.BACK, _position)
     if not sphere_shape:
         sphere_shape = SphereShape3D.new()
     sphere_shape.radius = _radius
     return shapecast(sphere_shape, _transform)
+
+
+
 
 ## raycast
 func raycast(from: Vector3, to: Vector3, exclude: Array = []):
