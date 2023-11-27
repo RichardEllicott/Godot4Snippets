@@ -25,7 +25,7 @@ func spherecast(_position: Vector3, _radius: float) -> Array[Dictionary]:
     return shapecast(sphere_shape, _transform)
 
 ## sorted example
-## spherecast, then sort by nearest
+## spherecast, then sort by nearest, a little rough (lots of copying)
 func sorted_spherecast(_position: Vector3, _radius: float) -> Array[Node3D]:
     
     var results = spherecast(_position, _radius)
