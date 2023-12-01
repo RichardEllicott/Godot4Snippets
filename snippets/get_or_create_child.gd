@@ -58,33 +58,26 @@ static func clear_children(_self: Node):
 ## _type: accepts a built in node like Button, Node3D etc
 ##        or a string of a built in, like "Button", "Node3D"
 ##        or a PackedScene
-##        or a plain Node that we will duplicate (warning children and data might be lost on the duplicate)
+##        or a node we will duplicate
 static func get_or_create_child(_parent: Node, _name: String, _type = Node) -> Node:
     var child = _parent.get_node_or_null(_name) # attempt to get the node by name
     if child == null: # if no node, we need to create one
         
-        # if a packed scene just instance it
-        if _type is PackedScene: 
+        if _type is PackedScene: # if a PackedScene, instantiate it
             child = _type.instantiate()
             
-        # if a string, we can try to match it in the ClassDB
-        # this works for built in types and user scripts with class_name
-        elif _type is String: 
+        elif _type is String: # if a string, try to match it in the ClassDB
             if ClassDB.class_exists(_type):
                 child = ClassDB.instantiate(_type)
-            else:
-                child = Label.new() # unrecognised type string
+            else: # unrecognised type string
+                child = Label.new() 
                 push_error("unrecognised type string: \"%s\"" % _type)
         
-        # if we put in a plain node
-        # unlike a PackedScene, this typically will not duplicate children and may possibly loose data
-        elif _type is Node:
+        elif _type is Node: # if a Node, duplicate it
             child = _type.duplicate() # warning using duplicate may be less effecient
         
-        # the last assumption we make is we have typed a plain type, this works like:
-        # get_or_create_child(self, "Name", Button)
-        else:
-            child = _type.new() # we assume just a plain type like Label, LineEdit or Button
+        else: # last assumption is a plain type and try to call "new"
+            child = _type.new()
         child.name = _name
         
         _parent.add_child(child)
@@ -92,5 +85,3 @@ static func get_or_create_child(_parent: Node, _name: String, _type = Node) -> N
         child.owner = _parent.get_tree().edited_scene_root 
 
     return child
-
-
