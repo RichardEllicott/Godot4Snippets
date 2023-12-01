@@ -28,10 +28,10 @@ const bullet_data_from_spreadsheet = """
 """
 
 
-static func csv_table_to_dict_of_dicts(tsv_string: String, split_symbol: String = ",") -> Dictionary:
+static func csv_table_to_dict_of_dicts(csv_string: String, split_symbol: String = ",") -> Dictionary:
     
     var return_dict: Dictionary = {}
-    var lines: Array = tsv_string.strip_edges().split("\n")
+    var lines: Array = csv_string.strip_edges().split("\n")
     assert(lines.size() > 1)
     var keys: Array # save an array of keys
     
@@ -41,7 +41,7 @@ static func csv_table_to_dict_of_dicts(tsv_string: String, split_symbol: String 
             keys = row
             
             for i2 in keys.size():
-                var string = keys[i2].strip_edges()
+                var string = keys[i2].strip_edges() # strip spaces around key
                 keys[i2] = string
             
         else:
