@@ -28,6 +28,11 @@ const bullet_data_from_spreadsheet = """
 """
 
 
+
+
+## easy csv string to dict of dicts function
+## uses what i call a "csv table", where line 0 is a header
+## doesn't support quote marks allowing commands inside
 static func csv_table_to_dict_of_dicts(csv_string: String, split_symbol: String = ",") -> Dictionary:
     
     var return_dict: Dictionary = {}
@@ -59,3 +64,4 @@ static func csv_table_to_dict_of_dicts(csv_string: String, split_symbol: String 
                     
                     row_dict[keys[i2]] = val # also trim the entries
     return return_dict
+
