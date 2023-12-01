@@ -3,6 +3,10 @@
 a quick way of getting data from a spreadsheet, paste out some csv or tsv, use this to turn it into dictionaries
 
 
+unfortunatly when pasting tabs into source code, you may have some problems when Godot autocorrects them! best to use commas
+
+
+
 """
 
 
