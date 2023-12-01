@@ -1,10 +1,6 @@
 """
 
-cache tool for the multimesh that can make lines.
-
-
-
-    
+cache tool for the multimesh that can make lines by stretching cylinders
 
 
 # make one of these objects
@@ -21,7 +17,7 @@ mmc.add_lines([
     Vector3(8,8,8),
     ])
 
-## the object will show the lines, also calls clear
+## update will display the lines, also clear the cache (so you need to put them back to redraw)
 mmc.update()
 
 
