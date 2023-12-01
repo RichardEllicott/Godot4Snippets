@@ -5,11 +5,12 @@ saturate colors
 
 """
 
+
 ## takes a colour and saturates it ie dark yellow becomes fully saturated yellow, navy blue becomes blue
 ## written as i couldn't find a Color to HSV function
 static func saturate_color(color: Color) -> Color:
     
-    var pole: int
+    var pole: int # find which is highest, r, g, or b
     if color.r > color.g:
         if color.r > color.b:
             pole = 0
@@ -21,7 +22,7 @@ static func saturate_color(color: Color) -> Color:
         else:
             pole = 2
     
-    var _scale: float
+    var _scale: float # normalize the values so the max is now 1.0
     match pole:
         0:
             _scale = 1.0 / color.r
