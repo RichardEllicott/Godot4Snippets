@@ -11,4 +11,4 @@ organisation here is not great but basicly everything useful is mostly inside th
 
 
 
-i always use the latest stable Godot, so now all snippets will be made to work with 4.2
+i always use the latest stable Godot, so now all snippets will be made to work with Godot 4.2
