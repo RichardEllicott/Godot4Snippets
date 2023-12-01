@@ -8,3 +8,7 @@ i found making a scapbook library like this to be useful as designing a propper 
 
 
 organisation here is not great but basicly everything useful is mostly inside the snippets folder
+
+
+
+i always use the latest stable Godot, so now all snippets will be made to work with 4.2
