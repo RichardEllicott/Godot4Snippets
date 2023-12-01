@@ -9,7 +9,7 @@ saturate colors
 ## written as i couldn't find a Color to HSV function
 static func saturate_color(color: Color) -> Color:
     
-    var pole
+    var pole: int
     if color.r > color.g:
         if color.r > color.b:
             pole = 0
@@ -21,14 +21,14 @@ static func saturate_color(color: Color) -> Color:
         else:
             pole = 2
     
-    var _scale
+    var _scale: float
     match pole:
         0:
-            _scale = 1.0/color.r
+            _scale = 1.0 / color.r
         1:
-            _scale = 1.0/color.g
+            _scale = 1.0 / color.g
         2:
-            _scale = 1.0/color.b
+            _scale = 1.0 / color.b
             
     color.r *= _scale
     color.g *= _scale
