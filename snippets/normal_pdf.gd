@@ -1,3 +1,12 @@
+"""
+
+normal probability distribution function
+
+this gives the height y of a bell curve where we are at the position x
+
+"""
+
+
 # ported normal probability distribution function
 # https://stackoverflow.com/questions/12412895/how-to-calculate-probability-in-a-normal-distribution-given-mean-standard-devi
 func normal_pdf(x: float, mean: float = 0.0, sd: float = 1.0) -> float:
