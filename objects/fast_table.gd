@@ -11,7 +11,7 @@ tested cell nodes:
     CheckBox
 
 
-call update() to trigger rebuild
+call update() to trigger rebuild, has some demo data
 
 """
 @tool
