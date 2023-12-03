@@ -1,21 +1,38 @@
 """
 
+DESCRIPTION:
+
 a table building object, fast and simple, designed so we set up a table and then get the signals back from this object
 so can do tables of buttons/data etc that can be edited
 
 
-tested cell nodes:
-    Label
-    LineEdit
-    Button
-    CheckButton # simply inherits buttons, by default sends toggled signal
-    CheckBox
+INSTRUCTIONS:
+
+to build the table, fill out the following values:
+
+    -keys, this is your header, a list of strings like ["name","age",sex",fave color"]
+    -types, a list of types, normally strings as these can be set in the editor, eg:
+
+        ["Label", "Label", "Label", "Button"] # if strings the table will check the ClassDB
+
+        (OPTIONAL) can also use three other formats:
+            [Label, Label, Label, Button] # can be plain objects, table will call ".new()"
+            [packed_scene1, packed_scene1, packed_scene1, packed_scene2] # can be PackedScene's, so set up a Control node in the editor
+            [control_node1, control_node1, control_node1, control_node2] # also a plain control node itself, will duplicate (not reccomended)
+    
+    -data, an array of the data itself, it must be a multiple in length of the header size
+    - for best presentation, type it like this:
+        [
+            "Sol",              "0.9",     "",     "",
+            "Draco",            "0.3",     "",     "",
+            "Betelgeuse",       "0.4",     "",     "",
+        ]
+
+then call, "update()", which will build the table if required and also fill out all the data
 
 
-call update() to trigger rebuild, has some demo data
-
-the table will only fully rebuild when the number of rows needs to change
-
+to use the tables buttons, or allow the user to edit the table data, look for the relevant signals on this object
+this object just builds the table itself
 
 """
 @tool
