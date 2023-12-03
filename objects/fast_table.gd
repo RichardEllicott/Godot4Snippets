@@ -1,6 +1,7 @@
 """
 
-a table building object, fast and simple
+a table building object, fast and simple, designed so we set up a table and then get the signals back from this object
+so can do tables of buttons/data etc that can be edited
 
 
 tested cell nodes:
