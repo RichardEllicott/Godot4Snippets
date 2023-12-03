@@ -3,17 +3,15 @@
 a table building object, fast and simple
 
 
-
 tested cell nodes:
     Label
     LineEdit
     Button
     CheckButton # simply inherits buttons, by default sends toggled signal
     CheckBox
-    
 
 
-    
+call update() to trigger rebuild
 
 """
 @tool
