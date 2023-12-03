@@ -13,11 +13,13 @@ tested cell nodes:
 
 call update() to trigger rebuild, has some demo data
 
+the table will only fully rebuild when the number of rows needs to change
+
+
 """
 @tool
 extends GridContainer
 class_name FastTable
-
 
 @export_group("Table")
 ## everything is based on the keys, must be unique strings
@@ -31,26 +33,6 @@ class_name FastTable
 
 ## the type of control node for the rows themselves, use Label, LineEdit and Button
 @export var types = ["Label", "Label", "LineEdit", "Button"] 
-
-
-## clear all rows
-func clear_rows():
-    data = []
-
-## can be called externally to build data
-func add_row(row: Array):
-    assert(row.size() == keys.size())
-    data.append_array(row)
-    
-
-# new feature
-var _cell_type_overrides = {}
-func set_cell_type_override(row: int, column: int, type):
-    _cell_type_overrides[Vector2i(column, row)] = type
-    
-func clear_cell_type_overrides():
-    _cell_type_overrides = {}
-    
 
 ## the data, but it is seriazlized, ensure the data size is divisible by the key count
 @export var data = [
@@ -72,7 +54,6 @@ func clear_cell_type_overrides():
     
 @export var minimum_column_widths: Array[float] = [128.0, 32.0, 64.0, 32.0]
     
-    
 @export_group("Scene Overrides")
 ## allows overriding the header so they look different (might be unimplemented)
 @export var header_scene: PackedScene
@@ -87,6 +68,37 @@ func clear_cell_type_overrides():
 
 ## hide the optional mirrored header
 @export var hide_header2 = false
+
+## allow sorting as is usual in tables by the column headers
+@export var sort_rows_on_header_pressed = true
+
+## pressing the same header cell twice reverses the order (similar to windows explorer etc)
+@export var sort_backwards_on_double_press = true
+
+## used internally to track the last sorted column
+var _last_header_pressed = -1 # second click reverses the order (might drop this)
+
+## still have not implemented this well, needs some sort of stretch mode like this
+var _size_flags_horizontal = Control.SIZE_EXPAND_FILL 
+
+
+## clear all rows
+func clear_rows():
+    data = []
+
+## can be called externally to build data
+func add_row(row: Array):
+    assert(row.size() == keys.size())
+    data.append_array(row)
+  
+# new feature
+var _cell_type_overrides = {}
+func set_cell_type_override(row: int, column: int, type):
+    _cell_type_overrides[Vector2i(column, row)] = type
+    
+func clear_cell_type_overrides():
+    _cell_type_overrides = {}
+    
 
 ## track rows (records) to hide
 var hidden_rows = {} # null ref dict to store hidden rows
@@ -109,7 +121,6 @@ func _get_expected_child_count():
     var expected_size = keys.size() * (entry_count + 1)
     return expected_size
     
-
 ## updates the data
 ## only calls a full rebuild at front if the amount of childs doesn't match what we expect
 func update():
@@ -169,23 +180,6 @@ func update():
                 if not control.text_changed.is_connected(_on_text_changed):
                     control.text_changed.connect(_on_text_changed.bind(row, x))
 
-            
-            
-            
-            
-                
-## allow sorting as is usual in tables by the column headers
-@export var sort_rows_on_header_pressed = true
-
-## pressing the same header cell twice reverses the order (similar to windows explorer etc)
-@export var sort_backwards_on_double_press = true
-
-## used internally to track the last sorted column
-var _last_header_pressed = -1 # second click reverses the order (might drop this)
-
-## still have not implemented this well, needs some sort of stretch mode like this
-var _size_flags_horizontal = Control.SIZE_EXPAND_FILL 
-
 ## respond to header press
 func _on_header_pressed(x: int):
     if debug_messages: print("_on_header_pressed %s" % x)
@@ -201,8 +195,6 @@ func _on_header_pressed(x: int):
             else:
                 _last_header_pressed = -1
     
-    
-
 # sent when a Button is pressed
 signal button_pressed(row, column)
 func _on_button_pressed(row, column):
@@ -213,8 +205,6 @@ signal button_toggled(row, column, pressed)
 func _on_button_toggled(pressed: bool, row: int, column: int):
     if debug_messages: print("_on_button_toggled %s %s, %s" % [pressed,row,column])
     emit_signal("button_toggled", row, column, pressed)
-    
-
     
 # sent when text is submitted to a LineEdit (must press enter, pretty lame)
 signal text_submitted(row, column, text)
@@ -230,9 +220,6 @@ func _on_text_changed(text, y, x):
     if debug_messages: print(data)
     emit_signal("text_changed", y, x, text)
     
-    
-
-
 ## sort in a alphabetical sort, triggers full sort algo + reparenting the controls
 func sort_by_column(col: int, reverse = false):
     
@@ -258,8 +245,6 @@ func sort_by_column(col: int, reverse = false):
         
     resort_rows() # call a refresh (will reparent the childs in the new order)
     
-
-
 ## the row positions, usually like [0,1,2,3,4,5,6]
 var row_positions: PackedInt32Array
 
