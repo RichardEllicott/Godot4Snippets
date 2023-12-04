@@ -8,22 +8,10 @@ https://github.com/RichardEllicott/Godot4Snippets/blob/main/snippets/metric_pref
   
 """
 
-# https://ask.godotengine.org/18559/how-to-add-commas-to-an-integer-or-float-in-gdscript
-# added sep option, elegant solution (short and recursive)
-static func comma_sep(n: int, sep: String = ",") -> String:
-    var result := ""
-    var i: int = abs(n)
-    
-    while i >= 1000:
-        result = "%s%03d%s" % [sep, i % 1000, result]
-        i /= 1000
-        
-    return "%s%s%s" % ["-" if n < 0 else "", i, result]
-
-
 # improved version of below
 # https://ask.godotengine.org/18559/how-to-add-commas-to-an-integer-or-float-in-gdscript
 # supports decimal places, set -1 to disable
+#
 static func comma_sep2(n: float, sep: String = ",", decimal_places: int = 3) -> String:
     var result := ""
     var i: int = abs(n) # the abs int is the whole component
