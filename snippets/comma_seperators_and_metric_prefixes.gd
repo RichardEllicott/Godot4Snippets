@@ -20,6 +20,26 @@ static func comma_sep(n: int, sep: String = ",") -> String:
         
     return "%s%s%s" % ["-" if n < 0 else "", i, result]
 
+# improved version of below
+# https://ask.godotengine.org/18559/how-to-add-commas-to-an-integer-or-float-in-gdscript
+# supports decimal places
+static func comma_sep2(n: float, decimal_places = 3, sep: String = ",") -> String:
+    var result := ""
+    var i: int = abs(n) # the abs int is the whole component
+    var fraction: float = n - i # the fraction alone
+    
+    fraction = snapped(fraction, 0.1 ** decimal_places) # snap to decimal places (leaves no trailing zeros)
+    
+    var fraction_string = ""
+    if fraction > 0.0:
+        fraction_string = ".%s" % str(fraction).split('.')[1]
+            
+    while i >= 1000:
+        result = "%s%03d%s" % [sep, i % 1000, result]
+        i /= 1000
+        
+    return "%s%s%s%s" % ["-" if n < 0 else "", i, result, fraction_string]
+
 
     
 ## looks less elegant no recursion
