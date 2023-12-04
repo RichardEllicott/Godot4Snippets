@@ -5,6 +5,18 @@ https://en.wikipedia.org/wiki/Metric_prefix
 
 this function takes a number and reduces it to the best metric prefix plus an optional number of decimal places
 
+"prefix" means the prefix to the symbol in metric, ie kM Mm (k and M)
+
+also supports turning the number into the 134.12×10¹⁵ format
+
+
+
+see also:
+https://github.com/RichardEllicott/Godot4Snippets/blob/main/snippets/comma_seperator_to_number.gd
+also makes numbers easier to read
+
+
+
 """
 
 ## add the metric prefix to long numbers, good when dealing with long numbers like meters vs km
