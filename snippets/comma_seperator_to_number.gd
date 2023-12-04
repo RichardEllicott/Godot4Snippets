@@ -3,8 +3,6 @@
   adding commas to a number like 1000 => 1,000
   
 """
-  
-  
 
 # https://ask.godotengine.org/18559/how-to-add-commas-to-an-integer-or-float-in-gdscript
 # added sep option
