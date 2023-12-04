@@ -12,7 +12,7 @@ https://github.com/RichardEllicott/Godot4Snippets/blob/main/snippets/metric_pref
 # https://ask.godotengine.org/18559/how-to-add-commas-to-an-integer-or-float-in-gdscript
 # supports decimal places, set -1 to disable
 #
-static func comma_sep2(n: float, sep: String = ",", decimal_places: int = 3) -> String:
+static func comma_seperator(n: float, sep: String = ",", decimal_places: int = 3) -> String:
     var result := ""
     var i: int = abs(n) # the abs int is the whole component
     var fraction: float = n - i # the fraction alone
