@@ -8,6 +8,10 @@ https://github.com/RichardEllicott/Godot4Snippets/blob/main/snippets/metric_pref
   
 """
 
+## make a large number clearer to read, eg:
+## 1000 => 1,000
+## 1100000.123 => 1,100,000.123
+## 
 ## improved version of below
 ## https://ask.godotengine.org/18559/how-to-add-commas-to-an-integer-or-float-in-gdscript
 ## supports decimal places, set -1 to disable
@@ -15,16 +19,15 @@ https://github.com/RichardEllicott/Godot4Snippets/blob/main/snippets/metric_pref
 static func comma_seperator(n: float, decimal_places: int = 3, sep: String = ',') -> String:
     var result := ""
     var i: int = abs(n) # the abs int is the whole component
-    var fraction: float = n - i # the fraction alone
     
+    var fraction: float = n - i # the fraction alone
     if decimal_places != -1:
         fraction = snapped(fraction, 0.1 ** decimal_places) # snap to decimal places (leaves no trailing zeros)
-    
-    var fraction_string = ""
-    if fraction > 0.0:
-        fraction_string = ".%s" % str(fraction).split('.')[1]
+    var fraction_string = "" 
+    if fraction > 0.0: # if we have a fraction
+        fraction_string = ".%s" % str(fraction).split('.')[1] # use a string split to get the decimal part
             
-    while i >= 1000:
+    while i >= 1000: # recurses while over 1000
         result = "%s%03d%s" % [sep, i % 1000, result]
         i /= 1000
         
