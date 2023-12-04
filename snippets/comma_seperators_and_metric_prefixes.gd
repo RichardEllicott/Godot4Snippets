@@ -33,7 +33,7 @@ static func comma_seperator(n: float, sep: String = ",", decimal_places: int = 3
 
 ## method using strings, works with floats, may be faster?
 ## it doesn't round properly however TODO??
-
+## delete?
 static func comma_sep2(n: float, sep: String = ","):
     
     var split = str(abs(n)).split('.') # split by decimal place, if no decimaal the split will 1 long
