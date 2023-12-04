@@ -1,6 +1,10 @@
 """
 
-  adding commas to a number like 1000 => 1,000
+adding commas to a number like 1000 => 1,000
+
+
+see also:
+https://github.com/RichardEllicott/Godot4Snippets/blob/main/snippets/metric_prefix_to_number.gd
   
 """
 
