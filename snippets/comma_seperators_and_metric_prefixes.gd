@@ -31,12 +31,9 @@ static func comma_seperator(n: float, sep: String = ",", decimal_places: int = 3
     return "%s%s%s%s" % ["-" if n < 0 else "", i, result, fraction_string]
 
 
+## method using strings, works with floats, may be faster?
+## it doesn't round properly however TODO??
 
-
-
-    
-## looks less elegant no recursion
-## but works with floats and might be faster, this technique uses strings and not sums
 static func comma_sep2(n: float, sep: String = ","):
     
     var split = str(abs(n)).split('.') # split by decimal place, if no decimaal the split will 1 long
