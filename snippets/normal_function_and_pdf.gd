@@ -32,7 +32,7 @@ i have these though as one extra thing can be done, and Godot has no "probabilit
 ## https://www.taygeta.com/random/gaussian.html # new link
 ## https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
 ## r1 and r2 are floats from 0.0 to 1.0
-func normal_2d(r1 = randf(), r2 = randf()) -> Vector2:
+func normal_2d(r1: float = randf(), r2: float = randf()) -> Vector2:
     var al1: float = sqrt(-2.0 * log(r1)) # part one
     var al2: float = 2.0 * PI * r2 # part two
     var x: float = al1 * cos(al2)
