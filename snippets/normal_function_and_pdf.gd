@@ -1,32 +1,27 @@
 """
 
-normal distribution functions
+normal distribution function and a probability distribution function
 
 
+
+NOTES ON THE TWO METHODS OF GENERATING NORMALS
 
 this guy has an interesting approach:
 https://github.com/pgoral/Godot-Gaussian-Random/blob/master/GaussianRandom.gd
 i belive he uses the "The Marsaglia polar method", i think this WAS faster before floating points, it uses discarding of values instead of cos and sin
 
+2021... i ran a test of this algo vs my old one (which i think is a Box-Muller transform)
+my old one was faster and this test was for 1D (despite my one being 2D)
 
-2021... i ran a test of this algo vs my old one, my old one is faster (even for 1D)!
-
-
-
-This orginal 2D method i have been using is faster, even despite generating 2 output values!
-i think it is the:
-Box-Muller transform
-
-test showed
-
-testing 1'000'000 calculations
-
-time taken: 2146 # this method
-time taken: 3534 # "The Marsaglia polar method"
+testing 1'000'000 calculations:
+    time taken: 2146 # this method
+    time taken: 3534 # "The Marsaglia polar method"
 
 
-note the RandomNumberGenerator has a guassian, randfn 
 
+note the RandomNumberGenerator has a normal function also, randfn()
+
+i have these though as one extra thing can be done, and Godot has no "probability distribution function"
 
 
 """
