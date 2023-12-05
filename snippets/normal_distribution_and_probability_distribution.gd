@@ -1,21 +1,17 @@
 """
 
-useful for randomly distributing things naturally in 2D, can be used for a shotgun blast for example
-(a shotgun blast would fall as a 2D normal distribution on a surface)
+normal distribution functions
 
-* note that it is not valid to simply take one dimension and assume this is a 1D Gaussian
-* this is because the 2D Gaussian is circular
 
-TODO: Add 1D and 3D functions
 
-some lead to a 1D gaussian:
+this guy has an interesting approach:
 https://github.com/pgoral/Godot-Gaussian-Random/blob/master/GaussianRandom.gd
+i belive he uses the "The Marsaglia polar method", i think this WAS faster before floating points, it uses discarding of values instead of cos and sin
 
 
-NEW NOTES 2021... i ran a test of this algo vs this:
-https://github.com/p10tr3k/Godot-Gaussian-Random/blob/master/GaussianRandom.gd
-which uses "The Marsaglia polar method"
-which is interesting but essentially rerolls randoms rather than using the sin and cos
+2021... i ran a test of this algo vs my old one, my old one is faster (even for 1D)!
+
+
 
 This orginal 2D method i have been using is faster, even despite generating 2 output values!
 i think it is the:
@@ -34,8 +30,8 @@ note the RandomNumberGenerator has a guassian, randfn
 
 
 """
-
-func gaussian_2D(r1 = randf(), r2 = randf()):
+## this is my old 
+func normal_2d(r1 = randf(), r2 = randf()):
     """
     ported from the caltech lua one (i think, the link is dead!)
     http://www.design.caltech.edu/erik/Misc/Gaussian.html
@@ -53,3 +49,14 @@ func gaussian_2D(r1 = randf(), r2 = randf()):
     var x = al1 * cos(al2)
     var y = al1 * sin(al2)
     return Vector2(x,y)
+
+
+#gives the height y of a bell curve where we are at the position x
+# ported normal probability distribution function
+# https://stackoverflow.com/questions/12412895/how-to-calculate-probability-in-a-normal-distribution-given-mean-standard-devi
+static func normal_pdf(x: float, mean: float = 0.0, standard_deviation: float = 1.0) -> float:
+    var v: float = float(standard_deviation)**2
+    var denom: float = (2 * PI * v)**.5
+    var num: float = exp(-(float(x)-float(mean))**2 / (2 * v))
+    return num / denom
+
