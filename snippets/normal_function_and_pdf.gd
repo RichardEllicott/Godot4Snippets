@@ -39,7 +39,6 @@ func normal_2d(r1 = randf(), r2 = randf()) -> Vector2:
     var y: float = al1 * sin(al2)
     return Vector2(x,y)
 
-
 ## normal probability distribution function
 ## gives the height y of a bell curve where we are at the position x
 ## ported from python:
@@ -49,5 +48,6 @@ static func normal_pdf(x: float, mean: float = 0.0, standard_deviation: float = 
     var denom: float = (2 * PI * v)**.5
     var num: float = exp(-(float(x)-float(mean))**2 / (2 * v))
     return num / denom
-    
+
+
 
