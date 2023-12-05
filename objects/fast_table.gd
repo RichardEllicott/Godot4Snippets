@@ -14,7 +14,11 @@ to build the table, fill out the following values:
     -types, a list of types, normally strings as these can be set in the editor, eg:
 
         ["Label", "Label", "Label", "Button"] # if strings the table will check the ClassDB
-
+        
+        WARNING: sometimes there is a hidden bug with these extra modes
+        FOR EXAMPLE: if you set plain Button it seems to stop the whole scene from loading (no error!)
+        TO AVOID THIS BUG JUST USE STRINGS
+        
         (OPTIONAL) can also use three other formats:
             [Label, Label, Label, Button] # can be plain objects, table will call ".new()"
             [packed_scene1, packed_scene1, packed_scene1, packed_scene2] # can be PackedScene's, so set up a Control node in the editor
@@ -34,12 +38,23 @@ then call, "update()", which will build the table if required and also fill out 
 to use the tables buttons, or allow the user to edit the table data, look for the relevant signals on this object
 this object just builds the table itself
 
+
+some good unicode icons to help building a bigger object:
+    
+    https://unicode-explorer.com/list/arrows
+    
 """
 @tool
 extends GridContainer
 class_name FastTable
 
 @export_group("Table")
+
+## the target grid container, usually self
+## this is a new feature to make a scroll container, may have bugs
+@export var grid_container: GridContainer = self
+
+
 ## everything is based on the keys, must be unique strings
 @export var keys: Array[String] = ["System", "Security", "Edit", "Select"]
 
@@ -66,6 +81,16 @@ class_name FastTable
     "Canis Major",          "0.3",     "",     "",
     "Taurus",          "0.3",     "",     "",
     ]
+    
+
+enum BuildMode {
+    normal,
+    scroll_container,
+}
+## special modes, like 1 for 
+@export var build_mode: BuildMode = BuildMode.normal
+
+
     
 ## if this target is selected, we make a duplicate header here, useful when we need the scroll container
 @export var build_header_in_control: Control
@@ -98,6 +123,9 @@ var _last_header_pressed = -1 # second click reverses the order (might drop this
 
 ## still have not implemented this well, needs some sort of stretch mode like this
 var _size_flags_horizontal = Control.SIZE_EXPAND_FILL 
+
+
+
 
 
 ## clear all rows
@@ -145,14 +173,14 @@ func update():
     
     if debug_messages: print("expected size ", _get_expected_child_count())
     
-    if get_child_count() != _get_expected_child_count() or debug_always_rebuild_table:
+    if grid_container.get_child_count() != _get_expected_child_count() or debug_always_rebuild_table:
         if debug_messages: print("trigger rebuild")
         rebuild()
     
     
     for x in keys.size(): # the header controls
         var key = keys[x]
-        var control: Control = get_node(key)
+        var control: Control = grid_container.get_node(key)
         control.text = key
         control.visible = not hide_header
         
@@ -180,7 +208,7 @@ func update():
             var key = keys[x]            
             var child_name = "%s_%s" % [row, key]
         
-            var control: Control = get_node(child_name)
+            var control: Control = grid_container.get_node(child_name)
             control.text = str(data[row * keys.size() + x])
             control.visible = not row in hidden_rows
             
@@ -238,6 +266,23 @@ func _on_text_changed(text, y, x):
     if debug_messages: print(data)
     emit_signal("text_changed", y, x, text)
     
+
+## this sort doesn't crash when we have different types, it will turn them into strings
+func _sort_function(a: Array, b: Array, reverse: bool = true) -> bool:
+    var a1 = a[1]
+    var b1 = b[1]
+    if typeof(a1) != typeof(b1): # if the types are different, set them as strings
+        a1 = str(a1)
+        b1 = str(b1)
+    if not reverse:
+        return a1 < b1
+    else:
+        return a1 > b1
+
+func _sort_function_reverse(a, b):
+    return _sort_function(a, b, true)
+    
+    
 ## sort in a alphabetical sort, triggers full sort algo + reparenting the controls
 func sort_by_column(col: int, reverse = false):
     
@@ -250,10 +295,12 @@ func sort_by_column(col: int, reverse = false):
         var entry = data[row * keys.size() + col]
         sort_data.append([row,entry])
     
-    if reverse:
-        sort_data.sort_custom(func(a, b): return a[1] > b[1]) # sort me
-    else:
+    if not reverse:
         sort_data.sort_custom(func(a, b): return a[1] < b[1]) # sort me
+        #sort_data.sort_custom(_sort_function)
+    else:
+        sort_data.sort_custom(func(a, b): return a[1] > b[1]) # sort me
+        #sort_data.sort_custom(_sort_function_reverse)
     
     var row_positions2 = PackedInt32Array() # create back a new row_positions array
     row_positions2.resize(entry_count)
@@ -277,13 +324,13 @@ func resort_rows():
     
     var controls = {}
     
-    for child in get_children():
-        remove_child(child)
+    for child in grid_container.get_children():
+        grid_container.remove_child(child)
         controls[child.name] = child # save in dict by child name
         
     for key in keys: ## add back header first
         if key in controls:
-            add_child(controls[key])
+            grid_container.add_child(controls[key])
     
     for i in row_positions.size():
         var row = row_positions[i]
@@ -293,7 +340,7 @@ func resort_rows():
             
             var control: Control = controls[_name]
             
-            add_child(control) # add all the childs back
+            grid_container.add_child(control) # add all the childs back
             control.owner = get_tree().edited_scene_root # required for tool mode
             
 
@@ -311,7 +358,7 @@ func _rebuild_row(row: int):
         if type2:
             type = type2
     
-        var control: Control = get_or_create_child(self, "%s_%s" % [row, key], type)
+        var control: Control = get_or_create_child(grid_container, "%s_%s" % [row, key], type)
         
                 
         control.custom_minimum_size.x = minimum_column_widths[x]
@@ -346,21 +393,43 @@ func _set_default_values():
 ## it is best to avoid needing to do this by hiding rows if possible
 func rebuild():
     
+    
+    if build_mode == null:
+        build_mode = BuildMode.normal
+    match build_mode:
+        BuildMode.scroll_container:
+            columns = 1
+            
+            var header = get_or_create_child(self, "HEADER", HBoxContainer)
+            
+            var scroll_container: ScrollContainer = get_or_create_child(self, "ScrollContainer", ScrollContainer)
+            scroll_container.size_flags_horizontal = SIZE_EXPAND_FILL
+            scroll_container.size_flags_vertical = SIZE_EXPAND_FILL
+            
+            var grid_container2 = get_or_create_child(scroll_container, "GridContainer", GridContainer)
+            
+            build_header_in_control = header
+            
+            
+            grid_container = grid_container2
+            pass
+    
+    
     _set_default_values()
     
-    for child in get_children(): # remove old childs
-        remove_child(child)
+    for child in grid_container.get_children(): # remove old childs
+        grid_container.remove_child(child)
         
     if is_instance_valid(build_header_in_control):
         for child in build_header_in_control.get_children(): # remove old childs
             build_header_in_control.remove_child(child)
     
-    columns = keys.size() # #set the columns of grid container
+    grid_container.columns = keys.size() # #set the columns of grid container
     
     for x in keys.size(): # create our headers
         var key = keys[x]
         
-        var target = self
+        var target = grid_container
         
         # this header is duplicated again below
         var control: Control = get_or_create_child(target, key, header_types[x])
@@ -403,7 +472,13 @@ func rebuild():
 
 func _ready():
 #    rebuild() # needed for signals as of yet
-    update() # calls rebuild as needed
+
+    # triggering update on ready is required to get signals and for the table to work
+    # but it is a pain in tool mode if trying to draw table in mode 0
+    if not Engine.is_editor_hint(): 
+        update() # calls rebuild as needed
+    
+    pass
     
 
 
@@ -450,6 +525,11 @@ static func get_or_create_child(_parent: Node, _name: String, _type = Node) -> N
     return child
 
 
+
+func macro_update():
+    update()
+func macro_rebuild():
+    rebuild()
 
 
 # tests
