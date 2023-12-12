@@ -5,7 +5,7 @@
   
 """
 
-## some example data, semi-human readable but a compact way of showing data inside a script
+## some example data, semi-human readable csv
 const csv_planet_data ="""
 Name,type,orbital radius (10^6 km),orbital eccentricity,Orbital Inclination (degrees),Orbital Velocity (km/s),diameter (km),Mass (10^24kg),Density (kg/m3),Gravity (m/s2),Escape Velocity (km/s),Rotation Period (hours),Length of Day (hours),Perihelion (10^6 km),Aphelion (10^6 km),Orbital Period (days),Obliquity to Orbit (degrees),Mean Temperature (C),Surface Pressure (bars),Number of Moons,Ring System?,Global Magnetic Field?
 Sun,Star,0,0,,,1391400,1988500,1408,274,617.6,,,,,,,15000000,,,,
