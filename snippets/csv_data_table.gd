@@ -21,6 +21,9 @@ Neptune,Ice Giant,4515,0.01,1.8,5.4,49528,102,1638,11,23.5,16.1,16.1,4471.1,4558
 Pluto,Rocky Planetoid,5906.4,0.244,17.2,4.7,2376,0.013,1850,0.7,1.3,-153.3,153.3,4436.8,7375.9,90560,122.5,-225,1e-05,5,0,Unknown
 """
 
+
+
+
 ## table object, just for data, loads from a csv string, used to manage spreadsheet style data
 class DataTable:
     
@@ -28,13 +31,41 @@ class DataTable:
     
     var rows: Array = []
     
+    ## insert column
+    func insert_column(_position: int, key: String, default_value = 0):
+        keys.insert(_position, key)
+        for row: Array in rows:
+            row.insert(_position, default_value)
+    
+    ## add to end
+    func add_column(key: String, default_value = ""):
+        keys.append(key)
+        for row: Array in rows:
+            row.append(default_value)
+            
+    
+    ## can add a list or just empty
+    func add_row(data = null):
+        var row = []
+        if data != null:
+            if not data.size() == keys.size():
+                push_error("data.size() != keys.size()")
+    
+        else:
+            row.resize(keys.size())
+        rows.append(row)
+            
     func size() -> int:
         return rows.size()
     
     func get_cell(id: int, key: String):
-        assert(key in keys)
+        
+        if not key in keys:
+            push_error("no key %s found in %s" % [key, keys])
         var c = keys.find(key)
-        assert(c != -1)
+        if c == -1:
+            push_error("no key %s found in %s" % [key, keys])
+            
         return rows[id][c]
     
     ## get a csv string
@@ -65,7 +96,7 @@ class DataTable:
         
         clear()
         
-        var strip = "\n\t " # strip these chars
+        var strip = "\n\t " # strip these chars fro edges
         csv = csv.lstrip(strip).rstrip(strip)
         
         var lines = csv.split('\n')
@@ -92,3 +123,34 @@ class DataTable:
     func clear():     
         keys = []
         rows = []
+        
+    ## input a string, find the column, also can just enter col
+    func string_to_column_number(key) -> int:
+        if not key is int:
+            key = keys.find(key)
+        return key
+        
+        
+    func rename_column(key, new_key):        
+        keys[string_to_column_number(key)] = new_key
+    
+    
+    func _init(_var):
+        
+        if _var is String:
+            load_from_csv_table(_var)
+        
+
+    ## call a function on a whole column
+    ## used to multiply all the values for example
+    ##
+    ## eg:
+    ## func(x): return x * 1000.0
+    ##
+    func map_to_column(key, lambda: Callable):
+        key = string_to_column_number(key) # accept int or key
+        for row in rows:            
+            row[key] = lambda.call(row[key])
+            
+
+
