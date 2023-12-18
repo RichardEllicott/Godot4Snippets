@@ -2,7 +2,9 @@
 
 awkward to type/edit sometimes, lifted this out of Zylanns Planet Atmosphere shader
 
-yet to test
+
+
+just scaps... 
 
 """
 
