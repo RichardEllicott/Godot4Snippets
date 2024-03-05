@@ -5,6 +5,9 @@ https://docs.godotengine.org/en/stable/tutorials/inputs/mouse_and_input_coordina
 
 get_viewport().get_mouse_position()
 
+
+var plane_pos = get_mouse_plane_position(get_viewport().get_camera_3d(), get_viewport().get_mouse_position())
+
 """
 
 
