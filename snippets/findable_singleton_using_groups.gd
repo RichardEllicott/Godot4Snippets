@@ -29,13 +29,11 @@ var shmup_gridmap: SHMUP_GridMap:
 
 
 
-## with cache?
-var shmup_gridmap: SHMUP_GridMap:
+## cache (should be faster, do not change singleton)
+var grid_map: GridMap:
     get:
-        if not shmup_gridmap:
-            var nodes = get_tree().get_nodes_in_group("SHMUP_GridMap")
+        if not grid_map:
+            var nodes = get_tree().get_nodes_in_group("GRIDMAP")
             if nodes.size() > 0:
-                shmup_gridmap = nodes[0]
-        return shmup_gridmap
-#    get:
-#        return get_tree().get_nodes_in_group("SHMUP_GridMap")[0]
+                grid_map = nodes[0]
+        return grid_map
