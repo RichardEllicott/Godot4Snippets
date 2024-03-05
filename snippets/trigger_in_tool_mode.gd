@@ -17,6 +17,13 @@ node.set_owner(get_tree().edited_scene_root)
             _ready()
 
 
+## this boolean is just for clicking in the editor to trigger a refresh
+@export var trigger_ready: bool:
+    set(value):
+        if value and Engine.is_editor_hint():
+            _ready()
+
+
 # trigger some macros that run methods on the body with reflection
 
 enum Macro{
