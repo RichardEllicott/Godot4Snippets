@@ -26,7 +26,7 @@ import os
 from PIL import Image  # to resize images
 
 OVERWRITE = True # if true overwrite files each time
-RESIZE_IMAGES = True
+RESIZE_IMAGES = True # if true, resize the image dimensions (a lot slower)
 
 resize_dimensions = (256, 256)
 
