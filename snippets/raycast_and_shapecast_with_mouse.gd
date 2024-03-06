@@ -4,6 +4,21 @@ query the world like for explosions
 
 """
 
+# raycast from the camera to mouse position example, collides with first area
+var query = PhysicsRayQueryParameters3D.new()
+var ray_length = 1000.0
+var camera = get_viewport().get_camera_3d()
+query.from = camera.position
+query.to = camera.position + camera.project_ray_normal(get_viewport().get_mouse_position()) * ray_length
+query.collide_with_areas = true
+query.collide_with_bodies = false
+var result = get_world_3d().get_direct_space_state().intersect_ray(query)
+print(result)
+
+
+
+
+
 
 
 
