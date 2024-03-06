@@ -20,23 +20,15 @@ shop_front_facade_2_normal.png
 
 
 """
-
-
 import glob
-
 import zipfile
-
 import os
-
 from PIL import Image  # to resize images
 
-
-OVERWRITE = True
-
+OVERWRITE = True # if true overwrite files each time
 RESIZE_IMAGES = True
 
 resize_dimensions = (256, 256)
-
 
 for filename in glob.glob("*.zip"):
 
@@ -48,9 +40,9 @@ for filename in glob.glob("*.zip"):
 
         for name in zf.namelist():
 
-            new_filename = "{}_{}".format(filename.split('.')[0], name).replace(' ', '_')
+            new_filename = "{}_{}".format(filename.split('.')[0], name).replace(' ', '_') # new filename, based on acrhive name, spaces converted to underscores
 
-            if os.path.isfile(new_filename):
+            if os.path.isfile(new_filename): # if file already exists
                 print('file "{}" already exists!'.format(new_filename))
 
                 if OVERWRITE:
@@ -67,9 +59,8 @@ for filename in glob.glob("*.zip"):
 
             if RESIZE_IMAGES:
                 image = Image.open(new_filename)
-                image.thumbnail(resize_dimensions)
+                image.thumbnail(resize_dimensions) # better than resize
                 image.save(new_filename)
 
 
-    #     # zip_ref.extractall("targetdir")
-    #     pass
+
