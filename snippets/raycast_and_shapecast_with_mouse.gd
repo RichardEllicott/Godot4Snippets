@@ -5,7 +5,7 @@ query the world like for explosions
 """
 
 # raycast from the camera to mouse position example, collides with first area
-# run on a Node3D
+# runs on a Node3D
 var query = PhysicsRayQueryParameters3D.new()
 var ray_length = 1000.0
 var camera = get_viewport().get_camera_3d()
