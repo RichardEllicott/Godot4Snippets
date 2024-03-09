@@ -1,4 +1,8 @@
+"""
 
+functions for implementing simple shell style script
+
+"""
 
 ## split command lines like a shell console
 ## split by spaces but uses quotes to allow spaces
