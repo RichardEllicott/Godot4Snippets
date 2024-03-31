@@ -1,6 +1,7 @@
 
 
-
+## Linear Congrugal Generator example, based on borland recipe
+## tested to show it made 10'000'000 numbers with no repeating but freezes godot a while
 ## https://en.wikipedia.org/wiki/Linear_congruential_generator
 class LCG:
     
