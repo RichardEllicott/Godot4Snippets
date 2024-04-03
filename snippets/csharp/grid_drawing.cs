@@ -3,12 +3,20 @@
 // it behaves like a flood fill
 // https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
+// Built here as a Node that can be created directly from GDScript (can't be accessed staticly, i decide to put up with this rather than create GDScript hooks)
+
+// other grid type functions now also added, because roguelike AI would need all this
+//
+// so has become also a bit of a library to test Ling of Sight Algos and problems
+//
+// so added:
+// Bresenham3D // draw lines on a grid, used for line of sight
+// Shell2D // draw square type shells around a position, used to check outwards from a position
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-
-
 
 
 
@@ -406,17 +414,24 @@ public partial class GridMapPathfindD : Node
 
 
     // return a square shaped "shell" aroud a position, used for line of sight to check outwards from 2D rouguelike player
+    // order should be 1 or more
     public static Godot.Collections.Array<Vector3I> Shell2D(Vector3I origin, int order)
     {
         var positions = new Godot.Collections.Array<Vector3I>();
+
+        if (order == 0) // do we need this?
+        {
+            positions.Add(origin);
+            return positions;
+        }
+
         int line_length = 2 * order;
         Vector3I line_start1 = new Vector3I(order, 0, order);
-        
         Vector3I line_start2 = new Vector3I(-order, 0, order);
         Vector3I line_start3 = new Vector3I(-order, 0, -order);
         Vector3I line_start4 = new Vector3I(order, 0, -order);
 
-        for (int i = 0; i < line_length; i++)
+        for (int i = 0; i < line_length; i++) // the technique we use is to draw 4 lines at once
         {
             var vec1 = new Vector3I(0, 0, -1) * i; // +x
             positions.Add(vec1 + line_start1);
@@ -434,10 +449,38 @@ public partial class GridMapPathfindD : Node
         return positions;
     }
 
-    public void draw_shell_2D(Vector3I position, int order, int value = 0){
+
+    // testing checking all around LOS
+    public void macro_los_checker()
+    {
+
+        int range = 8;
+
+        for (int i = 1; i <= range; i++)
+        {
+            var positons = Shell2D(from, i);
+
+            for (int j = 0; j < positons.Count; j++)
+            {
+                var positon = positons[j];
+
+                var check = los_check(from, positon); // this marks the grid
+
+            }
+
+            // var check = los_check()
+        }
+
+
+
+    }
+
+    public void draw_shell_2D(Vector3I position, int order, int value = 0)
+    {
 
         var cells = Shell2D(position, order);
-        for (int i = 0; i < cells.Count; i++){
+        for (int i = 0; i < cells.Count; i++)
+        {
             var cell = cells[i];
             gridmap.SetCellItem(cell, value);
         }
@@ -445,15 +488,19 @@ public partial class GridMapPathfindD : Node
     }
 
 
-    public void macro_test_Shell2D(){
+    public void macro_test_Shell2D()
+    {
 
         debug_gridmap.Clear();
 
         var shell_count = 8;
 
-        for (int i = 0; i < shell_count; i++){
+        for (int i = 0; i < shell_count; i++)
+        {
 
             draw_shell_2D(new Vector3I(), i, i);
+
+
 
         }
 
@@ -472,11 +519,16 @@ public partial class GridMapPathfindD : Node
 
     public Func<Vector3I, int, bool> visible_predicate = (position, value) => value == -1; // unblocked as in visible, we can see through
 
-    public void los_check(Vector3I from, Vector3I to)
+
+
+
+    public bool los_check(Vector3I from, Vector3I to)
     {
 
         bool ignore_from_position = false;
         var line = Bresenham3D(from, to);
+
+        int view_range = 8;
 
         bool blocked = false;
 
@@ -488,6 +540,15 @@ public partial class GridMapPathfindD : Node
             }
             var position = line[i];
             var val = gridmap.GetCellItem(position);
+
+            var distance = (from - to).Length();
+
+            if (distance >= view_range)
+            {
+                blocked = true;
+                break;
+            }
+
 
             var visible = visible_predicate(position, val);
 
@@ -516,22 +577,29 @@ public partial class GridMapPathfindD : Node
 
 
 
+        return !blocked;
+
     }
 
 
 
-    public void macro_clear_gridmaps()
+    public void macro_clear_gridmap()
     {
-
         if (gridmap.IsValid())
         {
             gridmap.Clear();
         }
+    }
+
+    public void macro_clear_debug_gridmap()
+    {
         if (debug_gridmap.IsValid())
         {
             debug_gridmap.Clear();
         }
     }
+
+
 
     public void macro_test_Bresenham3D()
     {
@@ -547,4 +615,3 @@ public partial class GridMapPathfindD : Node
     }
 
 }
-
