@@ -56,3 +56,11 @@ class HashRandom:
         print("average: ", total / count)
         print("min: ",  min)
         print("max: ",  max)
+
+
+# simple hash example
+func sha256(input: PackedByteArray) -> PackedByteArray:
+    var ctx: HashingContext = HashingContext.new()
+    ctx.start(HashingContext.HASH_SHA256)
+    ctx.update(input)
+    return ctx.finish()
