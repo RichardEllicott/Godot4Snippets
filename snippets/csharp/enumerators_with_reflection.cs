@@ -1,15 +1,6 @@
 
 
-// this is a common pattern i use with reflection
-// the reason is that the enumerator names now control the function names
-// it can make organising state machines much easier as the functions called are enforced by convention
-
-// i could have modes like modeA, modeB, modeC
-// _process_modeA
-// _process_modeB
-// _update_modeA
-
-// etc, it allows a convention enforced by the enumerators
+// reflection pattern where names of enums determine functions that are called
 
 public enum Mode
   {
@@ -18,21 +9,35 @@ public enum Mode
       test,
   }
 
+  [Export]
   Mode mode = 0;
 
-  public string get_enum_string()
-  { // get our mode as a string
+  int last_mode = -1;
+
+  MethodInfo mi;
+
+  public void update_reflection()
+  {
+      if (last_mode != (int)mode)
+      {
+          last_mode = (int)mode;
+          string enum_string = get_enum_string();
+          var update_method_name = "_update_" + enum_string;
+          mi = this.GetType().GetMethod(update_method_name); // nul if invalid
+      }
+  }
+
+  public string get_enum_string() // get our mode as a string
+  {
       return Enum.GetName(typeof(Mode), mode);
   }
 
-  public void call_method_based_on_enum_name()
-  {
-      string method_name = "_update_" + get_enum_string();
-      MethodInfo mi = this.GetType().GetMethod(method_name);
-      mi.Invoke(this, null);
-  }
 
-  public void _update_normal()
+  public void _Update()
   {
-      GD.Print("_update_normal...");
-  }
+      update_reflection();
+
+      if (mi != null)
+      {
+          mi.Invoke(this, null);
+      }
