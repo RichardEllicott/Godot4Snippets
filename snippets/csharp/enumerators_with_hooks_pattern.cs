@@ -16,7 +16,7 @@ public enum Mode
 
   MethodInfo mi;
 
-  public void update_reflection()
+  public void update_hooks() // update all the loops here, you could have others for process etc
   {
       if (last_mode != (int)mode)
       {
@@ -35,7 +35,7 @@ public enum Mode
 
   public void _Update()
   {
-      update_reflection();
+      update_hooks();
 
       if (mi != null)
       {
