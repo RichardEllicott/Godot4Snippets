@@ -4,6 +4,7 @@ static class Helper
     // sort using a "straight insertion" method, does not return a re-ordered array but an array of references like:
     // {2,1,0,3}
     // if the list was already sorted for example, the result would be {0,1,2,3}
+    // sorts in ascending order
     public static Godot.Collections.Array<int> MySort(this Godot.Collections.Array<float> input_array)
     {
         Func<float, float, bool> lambda = (x, y) => x > y; // sort ascending order
@@ -35,13 +36,5 @@ static class Helper
             }
         }
         return order; // Return the sorted array
-    }
-
-    // this is an Extenson to make it easier to check if node's are valid
-    public static bool IsValid<T>(this T node) where T : Godot.GodotObject
-    {
-        return node != null
-            && Godot.GodotObject.IsInstanceValid(node)
-            && !node.IsQueuedForDeletion();
     }
 }
