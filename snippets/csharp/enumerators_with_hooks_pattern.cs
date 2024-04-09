@@ -41,3 +41,25 @@ public enum Mode
       {
           mi.Invoke(this, null);
       }
+
+
+
+
+// alternate more simple method?
+Dictionary<String, MethodInfo> _method_cache = new Dictionary<String, MethodInfo>();
+public void call_method_string(String action_string)
+{
+    MethodInfo mi;
+    if (_method_cache.TryGetValue(action_string, out mi))
+    {
+    }
+    else
+    {
+        mi = this.GetType().GetMethod(action_string);
+        _method_cache[action_string] = mi;
+    }
+    if (mi != null)
+    {
+        mi.Invoke(this, null);
+    }
+}
