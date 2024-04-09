@@ -12,7 +12,7 @@ static class Helper
         var order = new Godot.Collections.Array<int>(); // we will return a list of the new order
         order.Resize(input_array.Count);
 
-        for (int i = 0; i < input_array.Count; i++)
+        for (int i = 0; i < input_array.Count; i++) // set up order array like {1,2,3,4...}
         {
             order[i] = i;
         }
