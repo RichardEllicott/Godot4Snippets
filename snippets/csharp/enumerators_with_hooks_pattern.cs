@@ -44,16 +44,13 @@ public enum Mode
 
 
 
-
 // alternate more simple method?
+// these methods might be more simple but slow? (calling strings)
 Dictionary<String, MethodInfo> _method_cache = new Dictionary<String, MethodInfo>();
 public void call_method_string(String action_string)
 {
     MethodInfo mi;
-    if (_method_cache.TryGetValue(action_string, out mi))
-    {
-    }
-    else
+    if (!_method_cache.TryGetValue(action_string, out mi)) // try to get from cache
     {
         mi = this.GetType().GetMethod(action_string);
         _method_cache[action_string] = mi;
@@ -63,3 +60,14 @@ public void call_method_string(String action_string)
         mi.Invoke(this, null);
     }
 }
+
+
+// this would be the look with no cache
+public static void call_method_on_target(Object target, String action_string)
+{
+    MethodInfo mi = target.GetType().GetMethod(action_string);
+    if (mi != null)
+    {
+        mi.Invoke(target, null);
+    }
+    }
