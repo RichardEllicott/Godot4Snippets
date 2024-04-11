@@ -2,7 +2,7 @@
 #// Bresenham in 3D (ported from CSharp to GDScript)
 #// ported to suit Godot from:
 #// https://www.geeksforgeeks.org/bresenhams-algorithm-for-3-d-line-drawing/
-func Bresenham3D(from: Vector3i, to: Vector3i):
+static func Bresenham3D(from: Vector3i, to: Vector3i):
 
     var ListOfPoints = []
 
