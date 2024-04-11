@@ -95,3 +95,39 @@ static func Bresenham3D(from: Vector3i, to: Vector3i):
             ListOfPoints.append(from)
 
     return ListOfPoints
+
+
+
+
+#// return a square shaped "shell" aroud a position, used for line of sight to check outwards from 2D rouguelike player
+#// order should be 1 or more
+#// i think the shells are probabally more simple and useful than the snake
+static func Shell2D(origin: Vector3i, order: int) -> Array[Vector3i]:
+#{
+    var positions: Array[Vector3i] = []
+
+    if (order == 0): #// do we need this?
+        positions.append(origin);
+        return positions;
+
+    var line_length: int = 2 * order;
+    var line_start1: Vector3i = Vector3i(order, 0, order);
+    var line_start2: Vector3i = Vector3i(-order, 0, order);
+    var line_start3: Vector3i = Vector3i(-order, 0, -order);
+    var line_start4: Vector3i = Vector3i(order, 0, -order);
+
+    for i in line_length:
+    
+        var vec1 = Vector3i(0, 0, -1) * i; #// +x
+        positions.append(origin + vec1 + line_start1)
+
+        var vec2 = Vector3i(1, 0, 0) * i; #// +z
+        positions.append(origin + vec2 + line_start2)
+
+        var vec3 = Vector3i(0, 0, 1) * i; #// -x
+        positions.append(origin + vec3 + line_start3)
+
+        var vec4 = Vector3i(-1, 0, 0) * i; #// -z
+        positions.append(origin + vec4 + line_start4)
+
+    return positions;
