@@ -13,6 +13,8 @@ static class BestExtensions
     // get a node by name, if it doesn't exist create one
     // example:
     // var mm3d = this.GetOrCreateChild<MultiMeshInstance3D>("MultiMeshInstance3D");
+    //
+    // this function makes it very easy to set up a node hierarchy in script, which can make scripts easier to use 
     public static T GetOrCreateChild<T>(this Godot.Node _parent, string _name) where T : Godot.Node, new()
     {
         var child = _parent.GetNodeOrNull(_name); // check for child
