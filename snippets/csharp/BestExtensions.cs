@@ -12,6 +12,8 @@ static class BestExtensions
 
     // get a node by name, if it doesn't exist create one
     // note might crash if the types do not match!
+    // example:
+    // var multimesh_instance3d = this.GetOrCreateChild<MultiMeshInstance3D>("MultiMeshInstance3D");
     public static T GetOrCreateChild<T>(this Godot.Node _parent, string _name) where T : Godot.Node, new()
     {
         var child = _parent.GetNodeOrNull(_name); // check for child
@@ -93,6 +95,8 @@ static class BestExtensions
     {
         return value.SetBit(position, !value.GetBit(position));
     }
+
+
 
 
 
