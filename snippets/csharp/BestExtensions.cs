@@ -33,13 +33,13 @@ static class BestExtensions
         return child as T;
     }
 
-
-
     // sort using a "straight insertion" method, does not return a re-ordered array but an array of indexes like:
     // {2,1,0,3}
     // if the list was already sorted for example, the result would be {0,1,2,3}
-
-    // effecient for small arrays
+    //
+    // unlike the normal sort methods, it's often useful to be able to just re-sort some keys, not the orginal data
+    //
+    // effecient for small arrays, most search algorithms share similar problems
     public static Godot.Collections.Array<int> InsertSort<[MustBeVariant] T>(this Godot.Collections.Array<T> input_array, Func<T, T, bool> lambda)
     {
         var order = new Godot.Collections.Array<int>(); // we will return a list of the new order
@@ -81,8 +81,8 @@ static class BestExtensions
         return InsertSort(input_array, (x, y) => x > y);
     }
 
-
-    // easy set bit flags on an integer
+    // easy set bit flags on an integer, ie binary
+    // 10110011
     public static int SetBit(this int i, int position, bool value)
     {
         if (value) return i |= (1 << position); // set bit to 1
