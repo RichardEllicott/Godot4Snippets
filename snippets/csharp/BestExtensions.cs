@@ -7,7 +7,7 @@ static class BestExtensions
     {
         return node != null
             && Godot.GodotObject.IsInstanceValid(node)
-            && !node.IsQueuedForDeletion();
+            && !node.IsQueuedForDeletion(); // prevents a crash where the object is being trashed
     }
 
     // get a node by name, if it doesn't exist create one
