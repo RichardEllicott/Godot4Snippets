@@ -1,6 +1,6 @@
 
 
-static class GridMapPathfindDStaticHelper
+static class BestExtensions
 {
     // this is an Extenson to make it easier to check if node's are valid (same as is_instance_valid in gdscript)
     public static bool IsValid<T>(this T node) where T : Godot.GodotObject
