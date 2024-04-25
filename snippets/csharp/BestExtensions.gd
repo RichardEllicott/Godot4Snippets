@@ -1,8 +1,5 @@
 
 
-
-
-// static class containing extensions, could be used as a singleton
 static class GridMapPathfindDStaticHelper
 {
     // this is an Extenson to make it easier to check if node's are valid (same as is_instance_valid in gdscript)
