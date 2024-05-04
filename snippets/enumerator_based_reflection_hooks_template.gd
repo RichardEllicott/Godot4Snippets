@@ -25,17 +25,16 @@ var _type: Type = Type.chicken
     get:
         return _type
     set(value):
-        var enum_string = Type.keys()[value]
+        var enum_string = Type.keys()[value] # get the string from the enumerator
         for prefix in ["_physics_process", "_process", "_ready", "_process_timer"]:
-            var method_string = "_%s%s" % [enum_string, prefix]
+            var method_string = "_%s%s" % [enum_string, prefix] # check for this method
             var hook_string = prefix + "_hook"            
-            if has_method(method_string):
+            if has_method(method_string): # if we have the method set the hook
                 var method = get(method_string)                
-                var hook = get(hook_string) # maybe check this exists?
+                #var hook = get(hook_string) # UNUSED maybe check hook exists?
                 set(hook_string, method)
             else:
                 set(hook_string, null) # if no method, null the hook
-                
         _type = value
         
         
