@@ -1,57 +1,70 @@
+/*
+
+i have yet to tidy this
 
 
 
+this pattern allows sort of setting types and lambda hooks then loading
 
-    public enum Mode
+it is a little clunnky tbh in CSharp
+
+
+sometimes i use it for composition in different programming enviroments and state machines
+
+*/
+
+
+
+public enum Mode
+{
+    GridMap,
+    GridMapDictionary,
+}
+
+
+private Mode _mode;
+
+[Export]
+public Mode mode
+{
+    get { return _mode; }
+    set
     {
-        GridMap,
-        GridMapDictionary,
-    }
+        _mode = value;
+        GD.Print("set mode ", _mode);
 
-
-    private Mode _mode;
-
-    [Export]
-    public Mode mode
-    {
-        get { return _mode; }
-        set
+        switch (mode)
         {
-            _mode = value;
-            GD.Print("set mode ", _mode);
+            case Mode.GridMap:
+                _get_cell_item = (position) => gridmap.GetCellItem(position);
+                _set_cell_item = (position, item, orientation) => gridmap.SetCellItem(position, item, orientation);
+                _clear = () => gridmap.Clear();
 
-            switch (mode)
-            {
-                case Mode.GridMap:
-                    _get_cell_item = (position) => gridmap.GetCellItem(position);
-                    _set_cell_item = (position, item, orientation) => gridmap.SetCellItem(position, item, orientation);
-                    _clear = () => gridmap.Clear();
+                break;
+            case Mode.GridMapDictionary:
+                _get_cell_item = (position) => gridmap_dictionary.GetValueOrDefault(position, -1);
 
-                    break;
-                case Mode.GridMapDictionary:
-                    _get_cell_item = (position) => gridmap_dictionary.GetValueOrDefault(position, -1);
-
-                    _set_cell_item = (position, item, orientation) =>
+                _set_cell_item = (position, item, orientation) =>
+                {
+                    if (item == -1)
                     {
-                        if (item == -1)
-                        {
-                            gridmap_dictionary.Remove(position);
-                        }
-                        else
-                        {
-                            gridmap_dictionary[position] = item;
-                        }
-                    };
+                        gridmap_dictionary.Remove(position);
+                    }
+                    else
+                    {
+                        gridmap_dictionary[position] = item;
+                    }
+                };
 
-                    _clear = () => gridmap_dictionary.Clear();
-                    break;
-            }
-
+                _clear = () => gridmap_dictionary.Clear();
+                break;
         }
+
     }
+}
 
 
-    // hooks
-    Func<Vector3I, int> _get_cell_item;
-    Action<Vector3I, int, int> _set_cell_item;
-    Action _clear;
+// hooks
+Func<Vector3I, int> _get_cell_item;
+Action<Vector3I, int, int> _set_cell_item;
+Action _clear;
