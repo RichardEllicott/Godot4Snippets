@@ -6,7 +6,7 @@ i have yet to tidy this
 
 this pattern allows sort of setting types and lambda hooks then loading
 
-it is a little clunnky tbh in CSharp
+it is a little clunnky tbh in CSharp, writing more traditional objects might be preferable
 
 
 sometimes i use it for composition in different programming enviroments and state machines
