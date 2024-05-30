@@ -40,7 +40,7 @@ var method: Callable = DEFAULT
 ## now the loop is basicly a lost thread (as there is a while loop)
 ## as we are unable to find this thread (very lazy), we will just break out of the loop if our state changed
 ##
-## i like this syntax as it's very easy to write
+## i like this syntax as it's very easy to write, it results in implicit threads and a timer (only possible since 4.x syntax)
 ##
 func SEARCHING():
     
