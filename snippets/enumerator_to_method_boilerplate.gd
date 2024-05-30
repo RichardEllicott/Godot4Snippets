@@ -53,12 +53,7 @@ func SEARCHING():
         i += 1
         
         print("searching ", i)
-        
-        var delay = get_new_delay()
-        print("wait for %.2f seconds" % delay)
-        
-        await wait(delay)
-        
-        parent.input_direction = get_random_direction()
-        
+            
+        get_tree().create_timer(1.0).timeout # wait for one second, then we will loop
+                
 
