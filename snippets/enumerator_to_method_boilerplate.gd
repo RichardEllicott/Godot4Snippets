@@ -43,10 +43,7 @@ func SEARCHING():
 
     var i = 0    
     while true: # loop
-        if not method == SEARCHING: # if no longer function pointed method
-            break # break out of this thread!
-        i += 1
-        
+    
         print("searching ", i)
 
         ## insert meaningful code here, including code that might check then change our state
@@ -54,5 +51,8 @@ func SEARCHING():
         ## meaningful code
 
         get_tree().create_timer(1.0).timeout # wait for one second, then we will loop
+        if not method == SEARCHING: # if no longer function pointed method
+            break # break out of this thread!
+        i += 1
                 
 
