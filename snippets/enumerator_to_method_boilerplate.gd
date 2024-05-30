@@ -2,7 +2,6 @@
 
 the most simple looking reflection hook
 
-
 we can use this for a simple, all on one script, state machine (why it says state)
 
 """
@@ -36,6 +35,9 @@ var method: Callable = DEFAULT
 ## as we are unable to find this thread (very lazy), we will just break out of the loop if our state changed
 ##
 ## i like this syntax as it's very easy to write, it results in implicit threads and a timer (only possible since 4.x syntax)
+##
+## note it's not really "multithreaded" as only on thread runs at a time in this pattern, so we don't need mutex's
+##
 ##
 func SEARCHING():
     
