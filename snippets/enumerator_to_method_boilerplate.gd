@@ -41,7 +41,7 @@ func SEARCHING():
     
     print("start SEARCHING...")
 
-    var i = 0    
+    var i = 0 # we don't really need this but could use this for our logic
     while true: # loop
     
         print("searching ", i)
