@@ -48,7 +48,11 @@ func SEARCHING():
         i += 1
         
         print("searching ", i)
-            
+
+        ## insert meaningful code here, including code that might check then change our state
+        ## meaningful code
+        ## meaningful code
+
         get_tree().create_timer(1.0).timeout # wait for one second, then we will loop
                 
 
