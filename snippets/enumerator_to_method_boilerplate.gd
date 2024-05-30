@@ -58,3 +58,16 @@ func SEARCHING():
         i += 1
                 
 
+
+## the previous method crashes a lot, so instead we could keep setting up signals from timers (not sure if it disposes of references)
+
+func IDLE():
+    
+    print("🦄 start IDLE...")
+    
+    if method == IDLE:
+        
+        #var delay = get_new_delay()
+        #get_tree().create_timer(delay).timeout.connect(IDLE)
+        
+        get_tree().create_timer(1.0).timeout.connect(IDLE)
