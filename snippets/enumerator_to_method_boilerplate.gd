@@ -19,7 +19,7 @@ enum State{
         return state
     set(_state):
         state = _state
-        method = DEFAULT # default callable (fallback in case function is missing, like a null ref)
+        method = DEFAULT # default callable (fallback in case function is missing)
         var method_name = State.keys()[state] # enumator int to name string
         if has_method(method_name): # if we find a method matching enumerator name
             method = get(method_name) # set the method
