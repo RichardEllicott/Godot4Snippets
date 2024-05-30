@@ -7,8 +7,6 @@ we can use this for a simple, all on one script, state machine (why it says stat
 
 """
 
-
-
 enum State{
     DEFAULT,
     IDLE,
@@ -32,9 +30,6 @@ func DEFAULT():
     pass
     
 var method: Callable = DEFAULT
-
-
-
 
 ## this is just an example of how a state machine could work, in this case we are using threads which sort of occurs after we call (await wait(delay))
 ## now the loop is basicly a lost thread (as there is a while loop)
