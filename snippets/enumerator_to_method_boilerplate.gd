@@ -22,12 +22,11 @@ enum State{
     set(_state):
         state = _state
         method = DEFAULT # default callable (fallback)
-        
-        var method_name = State.keys()[state]
+        var method_name = State.keys()[state] # enumator int to name string
         if has_method(method_name): # if we find a method matching enumerator name
-            method = get(method_name)
+            method = get(method_name) # set the method
                         
-        method.call()
+        method.call() # in this example we just call the method here, we could also for example add it to process with no lookup overhead (using Callable)
 
 func DEFAULT():
     pass
