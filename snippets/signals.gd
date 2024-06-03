@@ -2,8 +2,7 @@
 """
 child.pressed.connect(_on_button_pressed.bind(child))
 
-## connect signal if not connected
-func _connect_signal(from: Signal, to: Callable):
+static func connect_signal(from: Signal, to: Callable) -> void:
     if not from.is_connected(to):
         from.connect(to)
         
