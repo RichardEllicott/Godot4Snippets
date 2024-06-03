@@ -5,5 +5,5 @@
 ##
 ## good for delays like lightning
 ##
-static func folded_normal() -> float:    
-    return abs(randfn(0.0, 1.0)) / 0.7978845608028654
+static func folded_normal(normal: float = randfn(0.0, 1.0)) -> float:    
+    return abs(normal) / 0.7978845608028654
