@@ -1,9 +1,34 @@
 """
 """
 
+## using godot's timer in a quick fashion (requires the get_or_create_child function)
+
+func _connect_signal(from: Signal, to: Callable) -> void:
+    if not from.is_connected(to):
+        from.connect(to)
+        
+        
+## using my get_or_create_child function
+var timer: Timer:
+    get:
+        if not timer:
+            timer = StaticLib6.get_or_create_child(self, "Timer", Timer)
+        return timer
 
 
-## countdown timer with random delays
+func _on_timer_timeout()
+    print("timer!!")
+        
+func _ready():
+    _connect_signal(timer.timeout, _on_timer_timeout)
+    timer.start()
+    
+
+
+
+
+
+## countdown timer with random delays all hardcoded
 ##
 
 @export var timer_active: bool = true 
