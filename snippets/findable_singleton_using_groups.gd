@@ -9,11 +9,12 @@ i'm often using groups to find singletons as the pattern is decoupled
 func _ready():
     add_to_group("SHMUP_GridMap", true) # put this on the findable node (or set group in editor)
 
-
-# crash if no result
-var shmup_gridmap: SHMUP_GridMap:
+# minimal, crash if no result!
+var doom_ed2_manager: DoomEd2Manager:
     get:
-        return get_tree().get_nodes_in_group("SHMUP_GridMap")[0]
+        if not doom_ed2_manager:
+            doom_ed2_manager = get_tree().get_nodes_in_group("DoomEd2Manager")[0]
+        return doom_ed2_manager
 
 
 
