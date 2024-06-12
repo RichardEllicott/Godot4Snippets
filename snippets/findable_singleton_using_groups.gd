@@ -17,6 +17,17 @@ var doom_ed2_manager: DoomEd2Manager:
         return doom_ed2_manager
 
 
+# with error
+var doom_ed2_manager: DoomEd2Manager:
+    get:
+        if not doom_ed2_manager:
+            var nodes = get_tree().get_nodes_in_group("DoomEd2Manager")
+            if nodes.size() != 1:
+                push_error("DoomEd2Manager singleton not founf!")
+            doom_ed2_manager = nodes[0]
+        return doom_ed2_manager
+
+
 
 var shmup_gridmap: SHMUP_GridMap:
     get:
