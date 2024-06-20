@@ -1,16 +1,20 @@
 """
+connecting signals, showing Godot 4 code, works in tool mode
+
 """
 
-## normal syntax
-child.pressed.connect(_on_button_pressed.bind(child))
-child.pressed.connect(_on_button_pressed.bind(1234)) # binds a par here
 
-
-## connect signal checking the signal is not already connected (as it throws an error)
+## connect signal checking without throwing an already connected error
+##
+## example (with persist)
+## connect_signal(Button.pressed, _on_button_pressed, CONNECT_PERSIST)
 ##
 ## example (with bind):
 ## connect_signal(Button.pressed, _on_button_pressed.bind(1234))
 ##
-static func connect_signal(from: Signal, to: Callable) -> void:
+## flags:
+## https://docs.godotengine.org/en/stable/classes/class_object.html#enum-object-connectflags
+##
+static func connect_signal(from: Signal, to: Callable, flags: int = 0) -> void:
     if not from.is_connected(to):
-        from.connect(to)
+        from.connect(to, flags)
