@@ -1,3 +1,7 @@
+"""
+rendering server boilerplate example
+
+"""
 func _exit_tree():        
     clear_mesh_instances()
     
