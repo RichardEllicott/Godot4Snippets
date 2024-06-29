@@ -11,7 +11,7 @@ the ignore functions are useful if we limit say the x,z velocity but ignore the 
 ## hard limit a vector, means it's length cannot exceed a certain length
 ## the ignore will ignore that axis, ie ignore y to ignore the gravity velocity
 static func hard_limit_vector(
-    vector: Vector3, # he
+    vector: Vector3,
     limit: float,
     ignore_x: bool = false,
     ignore_y: bool = false,
