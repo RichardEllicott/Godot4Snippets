@@ -21,8 +21,8 @@ static func vec2_rad_to_deg(input: Vector2) -> Vector2:
 
 ## example property
 
-@export var rotation_speed_radians: Vector3
+@export var rotation_euler: Vector3
 
-@export var rotation_speed_degreees: Vector3: ## set the degrees with this
-    get: return vec3_rad_to_deg(rotation_speed_radians)
-    set(value): rotation_speed_radians = vec3_deg_to_rad(value)
+@export var rotation_euler_degreees: Vector3: ## set the degrees with this
+    get: return vec3_rad_to_deg(rotation_euler)
+    set(value): rotation_euler = vec3_deg_to_rad(value)
