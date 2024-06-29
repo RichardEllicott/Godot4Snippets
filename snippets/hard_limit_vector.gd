@@ -1,6 +1,10 @@
+"""
 
+hard limit a vector, used to control the maxiumum speed generally
 
+the ignore functions are useful if we limit say the x,z velocity but ignore the y (of gravity)
 
+"""
 
 
 ## hard limit a vector, means it's length cannot exceed a certain length
