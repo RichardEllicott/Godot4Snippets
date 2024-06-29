@@ -1,6 +1,9 @@
+"""
 
+converting degress to radians etc for vectors (deg_to_rad fucntion doesn't work for these)
 
-# deg_to_rad functions for vectors:
+either paste function of cut out the code for one liners
+"""
   
 static func vec3_deg_to_rad(input: Vector3) -> Vector3:
     return Vector3(deg_to_rad(input.x),deg_to_rad(input.y),deg_to_rad(input.z))
