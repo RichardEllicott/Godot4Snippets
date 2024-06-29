@@ -16,7 +16,7 @@ static func hard_limit_vector(
     ignore_x: bool = false,
     ignore_y: bool = false,
     ignore_z: bool = false
-    ):
+    ) -> Vector3:
         
     # create return vector
     var new_vector: Vector3 = vector
