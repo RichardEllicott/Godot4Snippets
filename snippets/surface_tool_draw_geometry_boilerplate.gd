@@ -36,6 +36,9 @@ func get_surface_tool() -> SurfaceTool:
     return surface_tool
 """
 
+
+var _surface_tools = []
+
 ## get the correct surface tool, generates a surface tool for each material
 func get_surface_tool() -> SurfaceTool:
     
