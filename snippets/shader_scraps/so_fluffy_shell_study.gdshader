@@ -1,3 +1,5 @@
+//  saving scraps that look like they may be useful later
+
 
 
 // BORROW FROM so_fluffy.gdshader
