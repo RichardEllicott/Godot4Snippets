@@ -1,5 +1,8 @@
 
 
+// calculating normals, useful for creating liquid illusions, we can always generate a normal if we have a "height" function
+// we do this by sampling our surrounding height
+
 // if the height function here, returns a height (use any example, noise, texture etc)
 
 float get_height(vec2 pos){
