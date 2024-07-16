@@ -1,4 +1,6 @@
 
+// get a parralax offset on a texture, allowing us to pretend it's closer or further away
+// useful to create shell shaders, clouds, internal transparency shaders etc
 
 void fragment() {
     vec2 uv = UV;
