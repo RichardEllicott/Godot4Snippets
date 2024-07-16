@@ -13,6 +13,8 @@ float get_height(vec2 pos){
 
 // then this will get the normal (but it does need to sample height 4 times, this is why normal maps exist!)
 
+// i included scale for testing, it can lessen the normal strength
+
 // https://docs.godotengine.org/en/3.0/tutorials/3d/vertex_displacement_with_shaders.html
 vec3 get_normal(vec2 _position, float _scale){
     vec2 _e = vec2(0.01, 0.0);
