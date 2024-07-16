@@ -1,7 +1,7 @@
 
 
 // calculating normals, useful for creating liquid illusions, we can always generate a normal if we have a "height" function
-// we do this by sampling our surrounding height
+// we do this by sampling our surrounding height (4 times it seems, i would have thought it could be 3!)
 
 // if the height function here, returns a height (use any example, noise, texture etc)
 
