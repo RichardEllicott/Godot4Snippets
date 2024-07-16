@@ -2,6 +2,8 @@
 // get a parralax offset on a texture, allowing us to pretend it's closer or further away
 // useful to create shell shaders, clouds, internal transparency shaders etc
 
+// can make the illusion of multiple layers of say clouds, all in one pass (using internal transparency)
+
 void fragment() {
     vec2 uv = UV;
     //uv *= uv_scale.xy + uv_offset.xy;
