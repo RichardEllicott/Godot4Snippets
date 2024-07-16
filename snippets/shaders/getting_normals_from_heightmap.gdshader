@@ -1,5 +1,6 @@
 
 
+// if the height function here, returns a height (use any example, noise, texture etc)
 
 float get_height(vec2 pos){
     float sample1 = texture(noise1, pos + move1 * TIME).r;
@@ -7,7 +8,8 @@ float get_height(vec2 pos){
     return sample1 * sample2;
 }
 
-// get a normal from the height functions, based on this code (modified from vertex)
+// then this will get the normal (but it does need to sample height 4 times, this is why normal maps exist!)
+
 // https://docs.godotengine.org/en/3.0/tutorials/3d/vertex_displacement_with_shaders.html
 vec3 get_normal(vec2 _position, float _scale){
     vec2 _e = vec2(0.01, 0.0);
