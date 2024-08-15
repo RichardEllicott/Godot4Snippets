@@ -22,7 +22,7 @@ var _path_direction_last_pos: Vector3 = Vector3.ZERO
 func get_path_direction(_target_position: Vector3) -> Vector3:
     
     if _path_direction_last_pos == global_position: # if position doesn't change, just return random direction
-        print("⚡ unstick jitter on ", self.name)
+        print("⚡ unstick jitter on ", self.name) # printing here will show when this kicks in for testing
         return Vector3(randf() - 0.5, randf() - 0.5, randf() - 0.5).normalized() # random direction in 3D space
     _path_direction_last_pos = global_position
     
